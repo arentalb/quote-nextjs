@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "migrate:dev": "dotenv -e .env.local -- npx prisma migrate dev --name"
+    "migrate:dev": "dotenv -e .env.local -- npx prisma migrate dev --name",
+    "seed": "node src/lib/seed.js"
+
   },
   "dependencies": {
     "@prisma/client": "^5.19.1",
@@ -22,6 +24,7 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.4.1",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
