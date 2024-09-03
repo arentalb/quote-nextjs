@@ -1589,110 +1589,309 @@
     <argument id="554" parent="190">
       <Position>1</Position>
     </argument>
-    <table id="555" parent="191" name="UserDatabase"/>
-    <table id="556" parent="191" name="_prisma_migrations"/>
-    <table id="557" parent="191" name="sqlite_master">
+    <table id="555" parent="191" name="Category"/>
+    <table id="556" parent="191" name="Comment"/>
+    <table id="557" parent="191" name="Qoute"/>
+    <table id="558" parent="191" name="Qoute_Category"/>
+    <table id="559" parent="191" name="User"/>
+    <table id="560" parent="191" name="_prisma_migrations"/>
+    <table id="561" parent="191" name="sqlite_master">
       <System>1</System>
     </table>
-    <column id="558" parent="555" name="id">
+    <column id="562" parent="555" name="id">
       <DasType>TEXT|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="559" parent="555" name="email">
+    <column id="563" parent="555" name="name">
       <DasType>TEXT|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="560" parent="555" name="name">
-      <DasType>TEXT|0s</DasType>
+    <column id="564" parent="555" name="created_at">
+      <DasType>DATETIME|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <column id="561" parent="555" name="password">
-      <DasType>TEXT|0s</DasType>
+    <column id="565" parent="555" name="updated_at">
+      <DasType>DATETIME|0s</DasType>
       <NotNull>1</NotNull>
       <Position>4</Position>
     </column>
-    <index id="562" parent="555" name="sqlite_autoindex_UserDatabase_1">
+    <index id="566" parent="555" name="sqlite_autoindex_Category_1">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <Unique>1</Unique>
     </index>
-    <index id="563" parent="555" name="UserDatabase_email_key">
-      <ColNames>email</ColNames>
-      <Unique>1</Unique>
-    </index>
-    <key id="564" parent="555">
+    <key id="567" parent="555">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
-      <UnderlyingIndexName>sqlite_autoindex_UserDatabase_1</UnderlyingIndexName>
+      <UnderlyingIndexName>sqlite_autoindex_Category_1</UnderlyingIndexName>
     </key>
-    <column id="565" parent="556" name="id">
+    <column id="568" parent="556" name="id">
       <DasType>TEXT|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="566" parent="556" name="checksum">
+    <column id="569" parent="556" name="message">
       <DasType>TEXT|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="567" parent="556" name="finished_at">
-      <DasType>DATETIME|0s</DasType>
+    <column id="570" parent="556" name="qouteId">
+      <DasType>TEXT|0s</DasType>
+      <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <column id="568" parent="556" name="migration_name">
+    <column id="571" parent="556" name="created_at">
+      <DasType>DATETIME|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+    </column>
+    <column id="572" parent="556" name="updated_at">
+      <DasType>DATETIME|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+    </column>
+    <column id="573" parent="556" name="userId">
+      <DasType>TEXT|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>6</Position>
+    </column>
+    <foreign-key id="574" parent="556" name="Comment_qouteId_fkey">
+      <ColNames>qouteId</ColNames>
+      <OnDelete>restrict</OnDelete>
+      <OnUpdate>cascade</OnUpdate>
+      <RefColNames>id</RefColNames>
+      <RefTableName>Qoute</RefTableName>
+    </foreign-key>
+    <foreign-key id="575" parent="556" name="Comment_userId_fkey">
+      <ColNames>userId</ColNames>
+      <OnDelete>restrict</OnDelete>
+      <OnUpdate>cascade</OnUpdate>
+      <RefColNames>id</RefColNames>
+      <RefTableName>User</RefTableName>
+    </foreign-key>
+    <index id="576" parent="556" name="sqlite_autoindex_Comment_1">
+      <ColNames>id</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <Unique>1</Unique>
+    </index>
+    <key id="577" parent="556">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>sqlite_autoindex_Comment_1</UnderlyingIndexName>
+    </key>
+    <column id="578" parent="557" name="id">
+      <DasType>TEXT|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="579" parent="557" name="title">
+      <DasType>TEXT|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+    </column>
+    <column id="580" parent="557" name="body">
+      <DasType>TEXT|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+    </column>
+    <column id="581" parent="557" name="author">
       <DasType>TEXT|0s</DasType>
       <NotNull>1</NotNull>
       <Position>4</Position>
     </column>
-    <column id="569" parent="556" name="logs">
+    <column id="582" parent="557" name="created_at">
+      <DasType>DATETIME|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+    </column>
+    <column id="583" parent="557" name="updated_at">
+      <DasType>DATETIME|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>6</Position>
+    </column>
+    <column id="584" parent="557" name="userId">
+      <DasType>TEXT|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>7</Position>
+    </column>
+    <foreign-key id="585" parent="557" name="Qoute_userId_fkey">
+      <ColNames>userId</ColNames>
+      <OnDelete>restrict</OnDelete>
+      <OnUpdate>cascade</OnUpdate>
+      <RefColNames>id</RefColNames>
+      <RefTableName>User</RefTableName>
+    </foreign-key>
+    <index id="586" parent="557" name="sqlite_autoindex_Qoute_1">
+      <ColNames>id</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <Unique>1</Unique>
+    </index>
+    <key id="587" parent="557">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>sqlite_autoindex_Qoute_1</UnderlyingIndexName>
+    </key>
+    <column id="588" parent="558" name="id">
+      <DasType>TEXT|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="589" parent="558" name="qouteId">
+      <DasType>TEXT|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+    </column>
+    <column id="590" parent="558" name="categoryId">
+      <DasType>TEXT|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+    </column>
+    <foreign-key id="591" parent="558" name="Qoute_Category_qouteId_fkey">
+      <ColNames>qouteId</ColNames>
+      <OnDelete>restrict</OnDelete>
+      <OnUpdate>cascade</OnUpdate>
+      <RefColNames>id</RefColNames>
+      <RefTableName>Qoute</RefTableName>
+    </foreign-key>
+    <foreign-key id="592" parent="558" name="Qoute_Category_categoryId_fkey">
+      <ColNames>categoryId</ColNames>
+      <OnDelete>restrict</OnDelete>
+      <OnUpdate>cascade</OnUpdate>
+      <RefColNames>id</RefColNames>
+      <RefTableName>Category</RefTableName>
+    </foreign-key>
+    <index id="593" parent="558" name="sqlite_autoindex_Qoute_Category_1">
+      <ColNames>id</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <Unique>1</Unique>
+    </index>
+    <key id="594" parent="558">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>sqlite_autoindex_Qoute_Category_1</UnderlyingIndexName>
+    </key>
+    <column id="595" parent="559" name="id">
+      <DasType>TEXT|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="596" parent="559" name="username">
+      <DasType>TEXT|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+    </column>
+    <column id="597" parent="559" name="email">
+      <DasType>TEXT|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+    </column>
+    <column id="598" parent="559" name="password">
+      <DasType>TEXT|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+    </column>
+    <column id="599" parent="559" name="role">
+      <DasType>TEXT|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+    </column>
+    <column id="600" parent="559" name="created_at">
+      <DasType>DATETIME|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>6</Position>
+    </column>
+    <column id="601" parent="559" name="updated_at">
+      <DasType>DATETIME|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>7</Position>
+    </column>
+    <index id="602" parent="559" name="sqlite_autoindex_User_1">
+      <ColNames>id</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <Unique>1</Unique>
+    </index>
+    <index id="603" parent="559" name="User_email_key">
+      <ColNames>email</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="604" parent="559">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>sqlite_autoindex_User_1</UnderlyingIndexName>
+    </key>
+    <column id="605" parent="560" name="id">
+      <DasType>TEXT|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="606" parent="560" name="checksum">
+      <DasType>TEXT|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+    </column>
+    <column id="607" parent="560" name="finished_at">
+      <DasType>DATETIME|0s</DasType>
+      <Position>3</Position>
+    </column>
+    <column id="608" parent="560" name="migration_name">
+      <DasType>TEXT|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+    </column>
+    <column id="609" parent="560" name="logs">
       <DasType>TEXT|0s</DasType>
       <Position>5</Position>
     </column>
-    <column id="570" parent="556" name="rolled_back_at">
+    <column id="610" parent="560" name="rolled_back_at">
       <DasType>DATETIME|0s</DasType>
       <Position>6</Position>
     </column>
-    <column id="571" parent="556" name="started_at">
+    <column id="611" parent="560" name="started_at">
       <DasType>DATETIME|0s</DasType>
       <DefaultExpression>current_timestamp</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>7</Position>
     </column>
-    <column id="572" parent="556" name="applied_steps_count">
+    <column id="612" parent="560" name="applied_steps_count">
       <DasType>INTEGER UNSIGNED|0s</DasType>
       <DefaultExpression>0</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>8</Position>
     </column>
-    <index id="573" parent="556" name="sqlite_autoindex__prisma_migrations_1">
+    <index id="613" parent="560" name="sqlite_autoindex__prisma_migrations_1">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <Unique>1</Unique>
     </index>
-    <key id="574" parent="556">
+    <key id="614" parent="560">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>sqlite_autoindex__prisma_migrations_1</UnderlyingIndexName>
     </key>
-    <column id="575" parent="557" name="type">
+    <column id="615" parent="561" name="type">
       <DasType>TEXT|0s</DasType>
       <Position>1</Position>
     </column>
-    <column id="576" parent="557" name="name">
+    <column id="616" parent="561" name="name">
       <DasType>TEXT|0s</DasType>
       <Position>2</Position>
     </column>
-    <column id="577" parent="557" name="tbl_name">
+    <column id="617" parent="561" name="tbl_name">
       <DasType>TEXT|0s</DasType>
       <Position>3</Position>
     </column>
-    <column id="578" parent="557" name="rootpage">
+    <column id="618" parent="561" name="rootpage">
       <DasType>INT|0s</DasType>
       <Position>4</Position>
     </column>
-    <column id="579" parent="557" name="sql">
+    <column id="619" parent="561" name="sql">
       <DasType>TEXT|0s</DasType>
       <Position>5</Position>
     </column>
