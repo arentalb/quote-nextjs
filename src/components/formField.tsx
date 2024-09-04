@@ -13,13 +13,13 @@ import Image from "next/image";
 export enum MyFormFieldTypes {
   INPUT = "input",
   CHECKBOX = "checkbox",
-  PASSWORD = "password",
 }
 interface customProps {
   control: Control<any>;
   fieldType: MyFormFieldTypes;
   name: string;
   label?: string;
+  isPassword?: boolean;
   placeHolder?: string;
   iconSrc?: string;
   iconAlt?: string;
@@ -71,29 +71,7 @@ function RenderField({ field, props }: { field: any; props: customProps }) {
             <Input
               placeholder={props.placeHolder}
               {...field}
-              type={"text"}
-              className={"shad-input border-0"}
-            />
-          </FormControl>
-        </div>
-      );
-    case MyFormFieldTypes.PASSWORD:
-      return (
-        <div className={"flex rounded-md border  border-dark-500 bg-dark-400 "}>
-          {props.iconSrc && (
-            <Image
-              src={props.iconSrc}
-              alt={props.iconAlt || "Icon"}
-              width={24}
-              height={24}
-              className={"ml-2"}
-            />
-          )}
-          <FormControl>
-            <Input
-              placeholder={props.placeHolder}
-              {...field}
-              type={"text"}
+              type={props.isPassword ? "password" : "text"}
               className={"shad-input border-0"}
             />
           </FormControl>
