@@ -4,7 +4,7 @@ import db from "@/lib/db";
 import bcrypt from "bcrypt";
 import { UserFormValidation } from "@/lib/validation";
 import { createSession } from "@/lib/session";
-import { CreateUserParams, Role } from "@/types";
+import { CreateUserParams, LoginUserParams, Role } from "@/types";
 
 export async function createUser(user: CreateUserParams) {
   const validatedFields = UserFormValidation.safeParse(user);
@@ -35,4 +35,24 @@ export async function createUser(user: CreateUserParams) {
       throw Error("Failed to create user");
     }
   }
+}
+
+export async function loginUser(user: LoginUserParams) {
+  const loggedUser = await db.user.findUnique({
+    where: {
+      email: user.email,
+    },
+  });
+  if (!loggedUser) {
+    throw Error("User dose not exists ");
+  }
+  const hashedPassword = await bcrypt.compare(
+    user.password,
+    loggedUser.password,
+  );
+  if (!hashedPassword) {
+    throw Error("Wrong password ");
+  }
+  await createSession(loggedUser.id, loggedUser.role);
+  return;
 }
