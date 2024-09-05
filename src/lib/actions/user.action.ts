@@ -3,8 +3,10 @@
 import db from "@/lib/db";
 import bcrypt from "bcrypt";
 import { UserFormValidation } from "@/lib/validation";
-import { createSession } from "@/lib/session";
+import { createSession, decrypt } from "@/lib/session";
 import { CreateUserParams, LoginUserParams, Role } from "@/types";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 export async function createUser(user: CreateUserParams) {
   const validatedFields = UserFormValidation.safeParse(user);
@@ -55,4 +57,17 @@ export async function loginUser(user: LoginUserParams) {
   }
   await createSession(loggedUser.id, loggedUser.role);
   return;
+}
+
+export async function logoutUser() {
+  cookies().delete("session");
+  redirect("login");
+  return;
+}
+export async function getUser() {
+  const cookie = cookies().get("session")?.value;
+  const session = cookie ? await decrypt(cookie) : null;
+  const role = String(session?.role);
+  const isAuthenticated = !!session?.userId;
+  return { isAuthenticated, role };
 }
