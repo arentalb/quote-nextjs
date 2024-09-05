@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { getUser } from "@/lib/actions/user.action";
-import LogOutBtn from "@/components/logOutBtn";
+import DropDownMenu from "@/components/DropDownMenu";
 
 export default async function NavBar() {
   const { isAuthenticated, role } = await getUser();
@@ -20,15 +20,10 @@ export default async function NavBar() {
         {isAuthenticated ? (
           <>
             {role === "admin" ? (
-              <Button asChild>
-                <Link href={"admin"}>admin</Link>
-              </Button>
+              <DropDownMenu links={["dashboard", "content", "profile"]} />
             ) : (
-              <Button asChild>
-                <Link href={"user"}>user</Link>
-              </Button>
+              <DropDownMenu links={["content", "profile"]} />
             )}
-            <LogOutBtn />
           </>
         ) : (
           <>
