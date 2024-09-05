@@ -7,7 +7,7 @@ const adminOnlyRoutes = ["/admin"]; // For only admins
 const userOnlyRoutes = ["/user"]; // For users only
 const authRoutes = ["/dashboard", "/profile"]; // For any authenticated user
 const notAuthRoutes = ["/login", "/signup"]; // For not authenticated users
-const publicRoutes = ["/home", "/about", "/contact"]; // For anyone
+const publicRoutes = ["/qoute", "/about", "/contact"]; // For anyone
 
 export default async function middleware(req: NextRequest) {
   const path = req.nextUrl.pathname;

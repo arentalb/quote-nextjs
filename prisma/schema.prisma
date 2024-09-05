@@ -34,30 +34,22 @@ model Comment {
 }
 
 model Qoute {
-  id         String           @id @default(cuid())
+  id         String     @id @default(cuid())
   title      String
   body       String
   author     String
-  created_at DateTime         @default(now())
-  updated_at DateTime         @updatedAt
-  User       User             @relation(fields: [userId], references: [id])
+  created_at DateTime   @default(now())
+  updated_at DateTime   @updatedAt
+  User       User       @relation(fields: [userId], references: [id])
   userId     String
   comments   Comment[]
-  categories Qoute_Category[]
-}
-
-model Qoute_Category {
-  id         String   @id @default(cuid())
-  qouteId    String
-  categoryId String
-  Qoute      Qoute    @relation(fields: [qouteId], references: [id])
-  Category   Category @relation(fields: [categoryId], references: [id])
+  categories Category[]
 }
 
 model Category {
-  id               String           @id @default(cuid())
-  name             String
-  created_at       DateTime         @default(now())
-  updated_at       DateTime         @updatedAt
-  Qoute_Categories Qoute_Category[]
+  id         String   @id @default(cuid())
+  name       String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  qoutes     Qoute[]
 }
