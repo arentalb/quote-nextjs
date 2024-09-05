@@ -12,3 +12,8 @@ export interface LoginUserParams {
   email: string;
   password: string;
 }
+
+export interface UpdateProfileParams {
+  email: string;
+  username: string;
+}

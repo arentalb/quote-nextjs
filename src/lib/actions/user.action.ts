@@ -4,7 +4,12 @@ import db from "@/lib/db";
 import bcrypt from "bcrypt";
 import { UserFormValidation } from "@/lib/validation";
 import { createSession, decrypt } from "@/lib/session";
-import { CreateUserParams, LoginUserParams, Role } from "@/types";
+import {
+  CreateUserParams,
+  LoginUserParams,
+  Role,
+  UpdateProfileParams,
+} from "@/types";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -70,4 +75,53 @@ export async function getUser() {
   const role = String(session?.role);
   const isAuthenticated = !!session?.userId;
   return { isAuthenticated, role };
+}
+export async function getUserID() {
+  const cookie = cookies().get("session")?.value;
+  const session = cookie ? await decrypt(cookie) : null;
+
+  // Return the userId if session is valid; otherwise, return null
+  return String(session?.userId);
+}
+
+export async function me() {
+  const cookie = cookies().get("session")?.value;
+  const session = cookie ? await decrypt(cookie) : null;
+  const userId = String(session?.userId);
+  const profile = await db.user.findUnique({
+    where: {
+      id: userId,
+    },
+    select: {
+      email: true,
+      role: true,
+      username: true,
+    },
+  });
+  console.log(profile);
+  return profile;
+}
+
+export async function updateProfile(data: UpdateProfileParams) {
+  console.log("data ---- ");
+  console.log(data.email);
+  console.log(data.username);
+
+  const userId = await getUserID(); // Assuming this function fetches the current user's ID
+
+  const updatedProfile = await db.user.update({
+    where: {
+      id: userId,
+    },
+    data: {
+      email: data.email,
+      username: data.username,
+    },
+    select: {
+      email: true,
+      role: true,
+      username: true,
+    },
+  });
+  return updatedProfile;
 }
