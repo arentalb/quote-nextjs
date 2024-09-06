@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { QouteWithUser } from "@/types/schema.type";
-import { formatDate } from "@/lib/utils"; // Import Prisma types
+import { formatDate } from "@/lib/utils";
 
 const customOptions: Intl.DateTimeFormatOptions = {
   year: "numeric",

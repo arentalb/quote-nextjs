@@ -2,9 +2,8 @@
 
 import db from "@/lib/db";
 
-export async function getAllQoute(search = "", categoryId = "") {
+export async function getAllQoute(search = "", categoryName = "") {
   search = search.trim();
-  categoryId = categoryId.trim();
 
   const whereClause: any = {
     AND: [
@@ -13,11 +12,11 @@ export async function getAllQoute(search = "", categoryId = "") {
           contains: search,
         },
       },
-      categoryId
+      categoryName
         ? {
             categories: {
               some: {
-                id: categoryId,
+                name: categoryName,
               },
             },
           }

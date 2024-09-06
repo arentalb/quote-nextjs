@@ -1,100 +1,33 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import { getAllCategories, getAllQoute } from "@/lib/actions/qoute.action";
-import { badgeVariants } from "@/components/ui/badge";
-import { QouteWithUser } from "@/types/schema.type";
-import { Category } from "@prisma/client";
-import QouteCard from "@/components/qouteCard";
-import { Input } from "@/components/ui/input";
+import React, { Suspense } from "react";
 import QouteSkeleton from "@/components/skeletons/qouteSkeleton";
-import { FileText } from "lucide-react";
+import SearchInput from "@/components/searchInput";
+import QouteList from "@/components/qoutList";
 import CategorySkeleton from "@/components/skeletons/categorySkeleton";
-import { cn } from "@/lib/utils";
+import CategoryList from "@/components/categoryList";
 
-export default function Home() {
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [quotes, setQuotes] = useState<QouteWithUser[]>([]);
-  const [qouteLoading, setQouteLoading] = useState(true);
-  const [categoryLoading, setCategoryLoading] = useState(true);
-  const [search, setSearch] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("");
-
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const fetchedCategories = await getAllCategories();
-        const fetchedQuotes = await getAllQoute(search, selectedCategory);
-        setCategories(fetchedCategories);
-        setQuotes(fetchedQuotes);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setQouteLoading(false);
-        setCategoryLoading(false);
-      }
-    }
-
-    fetchData();
-  }, [search, selectedCategory]);
+export default async function Page({
+  searchParams,
+}: {
+  searchParams?: { query?: string; category?: string };
+}) {
+  const query = searchParams?.query || "";
+  const selectedCategory = searchParams?.category || "";
 
   return (
     <div>
       <div>
         <div className="mb-8 flex flex-col justify-center items-center">
           <h1 className="text-5xl mb-8 text-center capitalize">Quotes</h1>
-          <Input
-            type="text"
-            className="w-1/2 h-14"
-            placeholder="Search"
-            onChange={(e) => setSearch(e.target.value)}
-          />
+          <SearchInput />
         </div>
       </div>
-      <div className="no-scrollbar flex gap-x-4 mb-16 overflow-x-auto whitespace-nowrap">
-        <div
-          className={`${badgeVariants({ variant: "outline" })} px-4 py-2`}
-          onClick={() => {
-            setSelectedCategory("");
-          }}
-        >
-          All Categories
-        </div>
+      <Suspense key={"category"} fallback={<CategorySkeleton />}>
+        <CategoryList selectedCategory={selectedCategory} />
+      </Suspense>
 
-        {categoryLoading &&
-          Array.from({ length: 14 }).map((_, index) => (
-            <CategorySkeleton key={index} />
-          ))}
-        {categories.map((category) => (
-          <button
-            key={category.id}
-            className={`${badgeVariants({ variant: "outline" })} px-4 py-2 ${cn(selectedCategory === category.id ? "border-2 border-primary" : "")}`}
-            onClick={() => setSelectedCategory(category.id)}
-          >
-            {category.name}
-          </button>
-        ))}
-      </div>
-
-      {qouteLoading && (
-        <div className="grid grid-cols-3 gap-4">
-          {Array.from({ length: 20 }).map((_, index) => (
-            <QouteSkeleton key={index} />
-          ))}
-        </div>
-      )}
-
-      {quotes.length !== 0 && !qouteLoading ? (
-        <ul className="grid grid-cols-3 gap-4">
-          {quotes.map((quote) => (
-            <QouteCard key={quote.id} qoute={quote} />
-          ))}
-        </ul>
-      ) : (
-        <div className="flex justify-center flex-col items-center">
-          <FileText width={100} height={150} strokeWidth={0.5} />
-          <p>No Quote Found</p>
-        </div>
-      )}
+      <Suspense key={query} fallback={<QouteSkeleton />}>
+        <QouteList query={query} category={selectedCategory} />
+      </Suspense>
     </div>
   );
 }
