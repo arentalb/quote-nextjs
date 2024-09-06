@@ -1,7 +1,7 @@
 "use server";
 
 import db from "@/lib/db";
-import { Qoute } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 
 export async function getAllQoute(search = "", categoryName = "") {
   search = search.trim();
@@ -51,10 +51,7 @@ export async function getAllCategories() {
 
 export async function getQouteById(
   id: string,
-): Promise<
-  | (Qoute & { categories: { name: string }[]; User: { username: string } })
-  | null
-> {
+): Promise<QuoteWithDetails | null> {
   return db.qoute.findUnique({
     where: {
       id: id,
@@ -70,6 +67,43 @@ export async function getQouteById(
           username: true,
         },
       },
+      comments: {
+        select: {
+          message: true,
+          created_at: true,
+          User: {
+            select: {
+              username: true,
+            },
+          },
+        },
+      },
     },
   });
 }
+
+type QuoteWithDetails = Prisma.QouteGetPayload<{
+  include: {
+    categories: {
+      select: {
+        name: true;
+      };
+    };
+    User: {
+      select: {
+        username: true;
+      };
+    };
+    comments: {
+      select: {
+        message: true;
+        created_at: true;
+        User: {
+          select: {
+            username: true;
+          };
+        };
+      };
+    };
+  };
+}>;
