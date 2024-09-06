@@ -25,7 +25,7 @@ export async function getAllQoute(search = "", categoryName = "") {
     ],
   };
 
-  const qoutes = await db.qoute.findMany({
+  const quotes = await db.qoute.findMany({
     where: whereClause,
     include: {
       User: {
@@ -41,7 +41,7 @@ export async function getAllQoute(search = "", categoryName = "") {
     },
   });
 
-  return qoutes;
+  return quotes;
 }
 
 export async function getAllCategories() {

@@ -1,9 +1,9 @@
 import React, { Suspense } from "react";
-import QouteSkeleton from "@/components/skeletons/qouteSkeleton";
 import SearchInput from "@/components/searchInput";
-import QouteList from "@/components/qoutList";
+import QouteList from "@/components/quotList";
 import CategorySkeleton from "@/components/skeletons/categorySkeleton";
 import CategoryList from "@/components/categoryList";
+import QuoteSkeleton from "@/components/skeletons/quoteSkeleton";
 
 export default async function Page({
   searchParams,
@@ -25,7 +25,7 @@ export default async function Page({
         <CategoryList selectedCategory={selectedCategory} />
       </Suspense>
 
-      <Suspense key={query} fallback={<QouteSkeleton />}>
+      <Suspense key={query} fallback={<QuoteSkeleton />}>
         <QouteList query={query} category={selectedCategory} />
       </Suspense>
     </div>

@@ -34,7 +34,7 @@ async function main() {
     ),
   );
 
-  const qoutes = await Promise.all(
+  const quotes = await Promise.all(
     Array.from({ length: 10 }, () =>
       db.qoute.create({
         data: {
@@ -53,14 +53,14 @@ async function main() {
         data: {
           message: faker.lorem.sentence(),
           userId: faker.helpers.arrayElement(users).id,
-          qouteId: faker.helpers.arrayElement(qoutes).id,
+          qouteId: faker.helpers.arrayElement(quotes).id,
         },
       }),
     ),
   );
 
   await Promise.all(
-    qoutes.map((qoute) =>
+    quotes.map((qoute) =>
       db.qoute_Category.createMany({
         data: categories.map((category) => ({
           qouteId: qoute.id,

@@ -7,7 +7,7 @@ const customOptions: Intl.DateTimeFormatOptions = {
   month: "numeric",
   day: "numeric",
 };
-export default function QouteCard({ qoute }: { qoute: QouteWithUser }) {
+export default function QuoteCard({ qoute }: { qoute: QouteWithUser }) {
   return (
     <Link
       href={`/qoute/${qoute.id}`}
