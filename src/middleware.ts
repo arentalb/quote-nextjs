@@ -7,7 +7,8 @@ const adminOnlyRoutes = ["/admin"]; // For only admins
 const userOnlyRoutes = ["/user"]; // For users only
 const authRoutes = ["/dashboard", "/profile"]; // For any authenticated user
 const notAuthRoutes = ["/login", "/signup"]; // For not authenticated users
-const publicRoutes = ["/qoute", "/about", "/contact"]; // For anyone
+const publicRoutes = ["/about", "/contact"]; // For anyone
+const protectedRoutes = ["/qoute"]; // For authenticated users (with dynamic parts)
 
 export default async function middleware(req: NextRequest) {
   const path = req.nextUrl.pathname;
@@ -22,6 +23,7 @@ export default async function middleware(req: NextRequest) {
   const isAuthRoute = authRoutes.includes(path);
   const isNotAuthRoute = notAuthRoutes.includes(path);
   const isPublicRoute = publicRoutes.includes(path);
+  const isProtectedRoute = path.startsWith("/qoute"); // Handle protected dynamic routes
 
   if (isAdminRoute && role !== Role.Admin) {
     return NextResponse.redirect(new URL("/", req.nextUrl));
@@ -39,9 +41,17 @@ export default async function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL("/", req.nextUrl));
   }
 
+  if (isProtectedRoute && !isAuthenticated) {
+    return NextResponse.redirect(new URL("/login", req.nextUrl));
+  }
+
   if (
     isPublicRoute ||
-    (!isAdminRoute && !isUserOnlyRoute && !isAuthRoute && !isNotAuthRoute)
+    (!isAdminRoute &&
+      !isUserOnlyRoute &&
+      !isAuthRoute &&
+      !isNotAuthRoute &&
+      !isProtectedRoute)
   ) {
     return NextResponse.next();
   }

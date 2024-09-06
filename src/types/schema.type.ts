@@ -7,3 +7,7 @@ export interface UserWithUsername {
 export interface QouteWithUser extends Qoute {
   User: UserWithUsername;
 }
+
+export interface QouteWithCategories extends Qoute {
+  Category: string;
+}
