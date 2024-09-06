@@ -8,20 +8,21 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import Link from "next/link";
 import { logoutUser } from "@/lib/actions/user.action";
+import { Button } from "@/components/ui/button";
 
 export default function DropDownMenu({ links }: { links: string[] }) {
   return (
     <div>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Avatar>
-            <AvatarFallback>A</AvatarFallback>
-          </Avatar>
+          <Button variant="outline" size="icon">
+            A
+          </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-auto">
+
+        <DropdownMenuContent className="w-auto mt-2" align={"end"}>
           {links.map((link) => (
             <div key={link}>
               <DropdownMenuItem
