@@ -2,8 +2,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { getUser } from "@/lib/actions/user.action";
-import DropDownMenu from "@/components/DropDownMenu";
-import { ModeToggle } from "@/components/ModeToggle";
+import DropDownMenu from "@/components/dropDownMenu";
+import { ModeToggle } from "@/components/modeToggle";
 import { Role } from "@/types";
 import { isAuthenticated } from "@/lib/actions/auth.action";
 

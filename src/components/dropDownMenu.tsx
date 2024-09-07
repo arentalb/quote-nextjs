@@ -10,8 +10,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { useUser } from "@/lib/UserContext";
 import { logoutUser } from "@/lib/actions/auth.action";
+import { useUser } from "@/lib/UserContext";
 
 export default function DropDownMenu({ links }: { links: string[] }) {
   const { user } = useUser();

@@ -6,7 +6,7 @@ import { Quote, Tag } from "lucide-react";
 
 import { formatDate } from "@/lib/utils";
 import { getQuoteById } from "@/lib/actions/qoute.action";
-import CommentSection from "@/components/CommentSection";
+import CommentSection from "@/components/commentSection";
 
 export default async function Page({ params }: { params: { slug: string } }) {
   // const { quote, loading, addComment } = useQuote(params.slug);

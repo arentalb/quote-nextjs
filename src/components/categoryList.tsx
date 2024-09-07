@@ -1,6 +1,6 @@
 import React from "react";
 import { getAllCategories } from "@/lib/actions/qoute.action";
-import CategoryListClient from "./CategoryListClient";
+import CategoryListClient from "./categoryListClient";
 
 export default async function CategoryList({
   selectedCategory,
