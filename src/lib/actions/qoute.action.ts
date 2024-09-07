@@ -2,6 +2,7 @@
 
 import db from "@/lib/db";
 import { Prisma } from "@prisma/client";
+import { getUserID } from "@/lib/actions/user.action";
 
 export async function getAllQoute(search = "", categoryName = "") {
   search = search.trim();
@@ -67,7 +68,37 @@ export async function getQouteById(
           username: true,
         },
       },
+    },
+  });
+}
+
+export type QuoteWithDetails = Prisma.QouteGetPayload<{
+  include: {
+    categories: {
+      select: {
+        name: true;
+      };
+    };
+    User: {
+      select: {
+        username: true;
+      };
+    };
+  };
+}>;
+
+export async function getQouteComments(
+  id: string,
+): Promise<QuoteComments | null> {
+  return db.qoute.findUnique({
+    where: {
+      id: id,
+    },
+    include: {
       comments: {
+        orderBy: {
+          created_at: "desc",
+        },
         select: {
           message: true,
           created_at: true,
@@ -81,19 +112,8 @@ export async function getQouteById(
     },
   });
 }
-
-type QuoteWithDetails = Prisma.QouteGetPayload<{
+export type QuoteComments = Prisma.QouteGetPayload<{
   include: {
-    categories: {
-      select: {
-        name: true;
-      };
-    };
-    User: {
-      select: {
-        username: true;
-      };
-    };
     comments: {
       select: {
         message: true;
@@ -107,3 +127,14 @@ type QuoteWithDetails = Prisma.QouteGetPayload<{
     };
   };
 }>;
+
+export async function CreateNewComment(message: string, qouteID: string) {
+  const userId = await getUserID();
+  return db.comment.create({
+    data: {
+      message: message,
+      qouteId: qouteID,
+      userId: userId,
+    },
+  });
+}

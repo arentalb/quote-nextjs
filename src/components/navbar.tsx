@@ -30,7 +30,7 @@ export default async function NavBar() {
   return (
     <div className={"flex justify-between items-center py-6"}>
       <Image
-        src={"logo.svg"}
+        src={"/logo.svg"}
         alt={"logo"}
         width={0}
         height={0}
