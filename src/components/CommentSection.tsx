@@ -10,11 +10,13 @@ import {
 import { Input } from "@/components/ui/input";
 import { MessageCircleOff, SendHorizontal } from "lucide-react";
 import CommentSkeleton from "@/components/skeletons/commentSkeleton";
+import { useUser } from "@/lib/UserContext";
 
 export default function CommentSection({ slug }: { slug: string }) {
   const [data, setData] = useState<QuoteComments | null>(null);
   const [message, setMessage] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(true);
+  const { user } = useUser();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -80,7 +82,11 @@ export default function CommentSection({ slug }: { slug: string }) {
                 <Comment
                   key={comment.message}
                   message={comment.message}
-                  username={comment.User?.username || "Anonymous"}
+                  username={
+                    comment.User?.username === user?.username
+                      ? "You"
+                      : comment.User.username
+                  }
                   date={comment.created_at}
                 />
               ))

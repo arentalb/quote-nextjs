@@ -10,11 +10,12 @@ import { useRouter } from "next/navigation";
 import { loginUser } from "@/lib/actions/user.action";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useToast } from "@/hooks/use-toast";
+import { useUser } from "@/lib/UserContext";
 
 export default function SignInForm() {
   const router = useRouter();
   const { toast } = useToast();
-
+  const { refreshUser } = useUser();
   const form = useForm<z.infer<typeof UserLoginFormValidation>>({
     resolver: zodResolver(UserLoginFormValidation),
     defaultValues: {
@@ -29,6 +30,8 @@ export default function SignInForm() {
   async function onSubmit(userData: z.infer<typeof UserLoginFormValidation>) {
     try {
       await loginUser(userData);
+      await refreshUser();
+
       router.push("/");
     } catch (error: any) {
       console.log(error);

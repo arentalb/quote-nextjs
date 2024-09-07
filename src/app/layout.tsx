@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import NavBar from "@/components/navbar";
 import { Toaster } from "@/components/ui/toaster";
+import { UserProvider } from "@/lib/UserContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,18 +21,22 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <div className={"max-w-[1200px] mx-auto px-4 border-2 min-h-screen"}>
-            <NavBar />
-            {children}
-          </div>
-        </ThemeProvider>
-        <Toaster />
+        <UserProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <div
+              className={"max-w-[1200px] mx-auto px-4 border-2 min-h-screen"}
+            >
+              <NavBar />
+              {children}
+            </div>
+          </ThemeProvider>
+          <Toaster />
+        </UserProvider>
       </body>
     </html>
   );

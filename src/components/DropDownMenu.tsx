@@ -11,14 +11,16 @@ import {
 import Link from "next/link";
 import { logoutUser } from "@/lib/actions/user.action";
 import { Button } from "@/components/ui/button";
+import { useUser } from "@/lib/UserContext";
 
 export default function DropDownMenu({ links }: { links: string[] }) {
+  const { user } = useUser();
   return (
     <div>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="outline" size="icon">
-            A
+            {user?.username.at(0)}
           </Button>
         </DropdownMenuTrigger>
 

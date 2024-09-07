@@ -93,6 +93,7 @@ export async function me() {
       id: userId,
     },
     select: {
+      id: true,
       email: true,
       role: true,
       username: true,
@@ -103,10 +104,6 @@ export async function me() {
 }
 
 export async function updateProfile(data: UpdateProfileParams) {
-  console.log("data ---- ");
-  console.log(data.email);
-  console.log(data.username);
-
   const userId = await getUserID(); // Assuming this function fetches the current user's ID
 
   const updatedProfile = await db.user.update({
