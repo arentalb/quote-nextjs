@@ -31,7 +31,7 @@ export default function DropDownMenu({ links }: { links: string[] }) {
               <DropdownMenuItem
                 className={"flex justify-center items-center capitalize"}
               >
-                <Link href={link}>{link}</Link>
+                <Link href={`/${link}`}>{link}</Link>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
             </div>

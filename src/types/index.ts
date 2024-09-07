@@ -2,13 +2,14 @@ export enum Role {
   User = "user",
   Admin = "admin",
 }
-export interface CreateUserParams {
+
+export interface SignUpUserParams {
   username: string;
   email: string;
   password: string;
 }
 
-export interface LoginUserParams {
+export interface SignInUserParams {
   email: string;
   password: string;
 }

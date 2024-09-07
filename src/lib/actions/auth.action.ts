@@ -4,12 +4,12 @@ import db from "@/lib/db";
 import bcrypt from "bcrypt";
 import { UserFormValidation } from "@/lib/validation";
 import { createSession, decrypt } from "@/lib/session";
-import { CreateUserParams, LoginUserParams, Role } from "@/types";
+import { Role, SignInUserParams, SignUpUserParams } from "@/types";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { User } from "@prisma/client";
 
-export async function createUser(user: CreateUserParams) {
+export async function createUser(user: SignUpUserParams) {
   const validatedFields = UserFormValidation.safeParse(user);
 
   if (!validatedFields.success) {
@@ -40,7 +40,7 @@ export async function createUser(user: CreateUserParams) {
   }
 }
 
-export async function loginUser(user: LoginUserParams) {
+export async function loginUser(user: SignInUserParams) {
   const loggedUser: User | null = await db.user.findUnique({
     where: {
       email: user.email,

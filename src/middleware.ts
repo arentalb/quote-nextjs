@@ -34,7 +34,7 @@ export default async function middleware(req: NextRequest) {
   }
 
   if (isAuthRoute && !isAuthenticated) {
-    return NextResponse.redirect(new URL("/login", req.nextUrl));
+    return NextResponse.redirect(new URL("/signin", req.nextUrl));
   }
 
   if (isNotAuthRoute && isAuthenticated) {
@@ -42,7 +42,7 @@ export default async function middleware(req: NextRequest) {
   }
 
   if (isProtectedRoute && !isAuthenticated) {
-    return NextResponse.redirect(new URL("/login", req.nextUrl));
+    return NextResponse.redirect(new URL("/signin", req.nextUrl));
   }
 
   if (

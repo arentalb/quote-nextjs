@@ -21,10 +21,10 @@ export default async function NavBar() {
     content = (
       <div className={"space-x-4"}>
         <Button asChild>
-          <Link href={"login"}>login</Link>
+          <Link href={"/signin"}>Sign In</Link>
         </Button>
         <Button asChild>
-          <Link href={"signup"}>SignUp</Link>
+          <Link href={"/signup"}>Sign Up</Link>
         </Button>
       </div>
     );
