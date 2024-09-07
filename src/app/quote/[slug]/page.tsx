@@ -5,13 +5,13 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Quote, Tag } from "lucide-react";
 
 import { formatDate } from "@/lib/utils";
-import { getQouteById } from "@/lib/actions/qoute.action";
+import { getQuoteById } from "@/lib/actions/qoute.action";
 import CommentSection from "@/components/CommentSection";
 
 export default async function Page({ params }: { params: { slug: string } }) {
   // const { quote, loading, addComment } = useQuote(params.slug);
 
-  const quote = await getQouteById(params.slug);
+  const quote = await getQuoteById(params.slug);
   if (!quote) {
     return <p>qoute not founded </p>;
   }

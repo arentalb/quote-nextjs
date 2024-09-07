@@ -7,10 +7,10 @@ import { MyFormField, MyFormFieldTypes } from "@/components/formField";
 import SubmitButton from "@/components/submitButton";
 import { UserLoginFormValidation } from "@/lib/validation";
 import { useRouter } from "next/navigation";
-import { loginUser } from "@/lib/actions/user.action";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useToast } from "@/hooks/use-toast";
 import { useUser } from "@/lib/UserContext";
+import { loginUser } from "@/lib/actions/auth.action";
 
 export default function SignInForm() {
   const router = useRouter();

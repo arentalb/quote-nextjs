@@ -2,15 +2,12 @@
 import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { formatDate } from "@/lib/utils";
-import {
-  CreateNewComment,
-  getQouteComments,
-  QuoteComments,
-} from "@/lib/actions/qoute.action";
+import { CreateNewComment, getQuoteComments } from "@/lib/actions/qoute.action";
 import { Input } from "@/components/ui/input";
 import { MessageCircleOff, SendHorizontal } from "lucide-react";
 import CommentSkeleton from "@/components/skeletons/commentSkeleton";
 import { useUser } from "@/lib/UserContext";
+import { QuoteComments } from "@/types/qoute.action.type";
 
 export default function CommentSection({ slug }: { slug: string }) {
   const [data, setData] = useState<QuoteComments | null>(null);
@@ -22,7 +19,7 @@ export default function CommentSection({ slug }: { slug: string }) {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const commentsData = await getQouteComments(slug);
+        const commentsData = await getQuoteComments(slug);
         setData(commentsData);
         setLoading(false);
       } catch (error) {
@@ -38,7 +35,7 @@ export default function CommentSection({ slug }: { slug: string }) {
     try {
       await CreateNewComment(message, slug);
       setMessage("");
-      const commentsData = await getQouteComments(slug);
+      const commentsData = await getQuoteComments(slug);
       setData(commentsData);
     } catch (error) {
       console.error("Error creating a new comment:", error);

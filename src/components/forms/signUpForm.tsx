@@ -7,9 +7,9 @@ import { MyFormField, MyFormFieldTypes } from "@/components/formField";
 import SubmitButton from "@/components/submitButton";
 import { UserFormValidation } from "@/lib/validation";
 import { useRouter } from "next/navigation";
-import { createUser } from "@/lib/actions/user.action";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useToast } from "@/hooks/use-toast";
+import { createUser } from "@/lib/actions/auth.action";
 
 export default function SignUpForm() {
   const router = useRouter();

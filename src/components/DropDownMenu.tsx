@@ -9,12 +9,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
-import { logoutUser } from "@/lib/actions/user.action";
 import { Button } from "@/components/ui/button";
 import { useUser } from "@/lib/UserContext";
+import { logoutUser } from "@/lib/actions/auth.action";
 
 export default function DropDownMenu({ links }: { links: string[] }) {
   const { user } = useUser();
+  console.log(user);
   return (
     <div>
       <DropdownMenu>

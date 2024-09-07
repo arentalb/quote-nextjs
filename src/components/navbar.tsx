@@ -5,15 +5,17 @@ import { getUser } from "@/lib/actions/user.action";
 import DropDownMenu from "@/components/DropDownMenu";
 import { ModeToggle } from "@/components/ModeToggle";
 import { Role } from "@/types";
+import { isAuthenticated } from "@/lib/actions/auth.action";
 
 export default async function NavBar() {
-  const { isAuthenticated, role } = await getUser();
+  const user = await getUser();
 
+  const authenticated = await isAuthenticated();
   let content;
 
-  if (isAuthenticated && role === Role.Admin) {
+  if (authenticated && user?.role === Role.Admin) {
     content = <DropDownMenu links={["dashboard", "content", "profile"]} />;
-  } else if (isAuthenticated && role === Role.User) {
+  } else if (authenticated && user?.role === Role.User) {
     content = <DropDownMenu links={["content", "profile"]} />;
   } else {
     content = (

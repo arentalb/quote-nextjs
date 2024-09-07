@@ -6,7 +6,7 @@ import React, {
   useEffect,
   useState,
 } from "react";
-import { me } from "@/lib/actions/user.action";
+import { getUser } from "@/lib/actions/user.action";
 
 interface User {
   id: string;
@@ -30,7 +30,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
 
   const fetchUser = async () => {
     try {
-      const response = await me();
+      const response = await getUser();
       setUser(response);
       console.log("user fetched ");
     } catch (error) {
