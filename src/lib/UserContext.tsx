@@ -32,7 +32,6 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
     try {
       const response = await getUser();
       setUser(response);
-      console.log("user fetched ");
     } catch (error) {
       console.error("Failed to fetch user:", error);
     }

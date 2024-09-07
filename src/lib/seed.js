@@ -10,7 +10,6 @@ const db = new PrismaClient({
   },
 });
 async function main() {
-  console.log("main fun ");
   const categories = await Promise.all(
     Array.from({ length: 5 }, () =>
       db.category.create({

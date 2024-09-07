@@ -15,7 +15,6 @@ import { useUser } from "@/lib/UserContext";
 
 export default function DropDownMenu({ links }: { links: string[] }) {
   const { user } = useUser();
-  console.log(user);
   return (
     <div>
       <DropdownMenu>
