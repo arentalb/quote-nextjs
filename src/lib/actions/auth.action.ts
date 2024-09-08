@@ -3,7 +3,7 @@
 import db from "@/lib/db";
 import bcrypt from "bcrypt";
 import { UserFormValidation } from "@/lib/validation";
-import { createSession, decrypt } from "@/lib/session";
+import { createSession, decrypt, deleteSession } from "@/lib/session";
 import { Role, SignInUserParams, SignUpUserParams } from "@/types";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
@@ -61,8 +61,8 @@ export async function loginUser(user: SignInUserParams) {
 }
 
 export async function logoutUser() {
-  cookies().delete("session");
-  redirect("login");
+  deleteSession();
+  redirect("/signin");
   return;
 }
 export async function isAuthenticated() {

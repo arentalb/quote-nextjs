@@ -1,13 +1,14 @@
-import Link from "next/link";
+import { getUser, verifySession } from "@/lib/dal";
 import Image from "next/image";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { getUser } from "@/lib/actions/user.action";
 import DropDownMenu from "@/components/dropDownMenu";
-import { ModeToggle } from "@/components/modeToggle";
-import { Role } from "@/types";
 import { isAuthenticated } from "@/lib/actions/auth.action";
+import { Role } from "@/types";
+import { ModeToggle } from "@/components/modeToggle";
 
 export default async function NavBar() {
+  await verifySession();
   const user = await getUser();
 
   const authenticated = await isAuthenticated();

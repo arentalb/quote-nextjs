@@ -1,5 +1,3 @@
-// app/page.tsx
-
 import React from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Quote, Tag } from "lucide-react";
@@ -7,10 +5,14 @@ import { Quote, Tag } from "lucide-react";
 import { formatDate } from "@/lib/utils";
 import { getQuoteById } from "@/lib/actions/qoute.action";
 import CommentSection from "@/components/commentSection";
+import { redirect } from "next/navigation";
+import { verifySession } from "@/lib/dal";
 
 export default async function Page({ params }: { params: { slug: string } }) {
-  // const { quote, loading, addComment } = useQuote(params.slug);
-
+  const auth = await verifySession();
+  if (!auth?.isAuth) {
+    redirect("/signup");
+  }
   const quote = await getQuoteById(params.slug);
   if (!quote) {
     return <p>qoute not founded </p>;

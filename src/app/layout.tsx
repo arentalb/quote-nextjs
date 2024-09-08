@@ -4,7 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import NavBar from "@/components/navbar";
 import { Toaster } from "@/components/ui/toaster";
-import { UserProvider } from "@/lib/UserContext";
+import { AuthProvider } from "@/contexts/AuthContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -13,15 +13,17 @@ export const metadata: Metadata = {
   description: "Build by Aren Talb ",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  console.log("RootLayout");
+
   return (
     <html lang="en">
       <body className={inter.className}>
-        <UserProvider>
+        <AuthProvider>
           <ThemeProvider
             attribute="class"
             defaultTheme="dark"
@@ -36,7 +38,7 @@ export default function RootLayout({
             </div>
           </ThemeProvider>
           <Toaster />
-        </UserProvider>
+        </AuthProvider>
       </body>
     </html>
   );

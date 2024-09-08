@@ -6,15 +6,14 @@ import { CreateNewComment, getQuoteComments } from "@/lib/actions/qoute.action";
 import { Input } from "@/components/ui/input";
 import { MessageCircleOff, SendHorizontal } from "lucide-react";
 import CommentSkeleton from "@/components/skeletons/commentSkeleton";
-import { useUser } from "@/lib/UserContext";
 import { QuoteComments } from "@/types/qoute.action.type";
+import { useAuth } from "@/contexts/AuthContext";
 
 export default function CommentSection({ slug }: { slug: string }) {
   const [data, setData] = useState<QuoteComments | null>(null);
   const [message, setMessage] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(true);
-  const { user } = useUser();
-
+  const { user } = useAuth();
   useEffect(() => {
     const fetchData = async () => {
       try {

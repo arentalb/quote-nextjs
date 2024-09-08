@@ -12,23 +12,6 @@ export async function getUserID(): Promise<string> {
   return String(session?.userId);
 }
 
-export async function getUser(): Promise<UserWithOutPassword | null> {
-  const cookie = cookies().get("session")?.value;
-  const session = cookie ? await decrypt(cookie) : null;
-  const userId = String(session?.userId);
-  return db.user.findUnique({
-    where: {
-      id: userId,
-    },
-    select: {
-      id: true,
-      email: true,
-      role: true,
-      username: true,
-    },
-  });
-}
-
 export async function updateProfile(
   data: UpdateProfileParams,
 ): Promise<UserWithOutPassword> {
