@@ -78,6 +78,7 @@ export async function getQuoteComments(
           created_at: "desc",
         },
         select: {
+          id: true,
           message: true,
           created_at: true,
           User: {
@@ -105,6 +106,78 @@ export async function CreateNewComment(
       message: message,
       qouteId: qouteID,
       userId: user?.id,
+    },
+  });
+}
+export async function UpdateComment(
+  commentId: string,
+  newComment: string,
+): Promise<Comment | null> {
+  const { user } = await getAuth();
+
+  if (!user) {
+    return null;
+  }
+
+  if (newComment.trim().length === 0) {
+    throw new Error("Comment message could not be null ");
+  }
+
+  const comment = await db.comment.findUnique({
+    where: {
+      id: commentId,
+    },
+    select: {
+      userId: true,
+    },
+  });
+
+  if (!comment) {
+    return null;
+  }
+
+  if (comment.userId !== user.id) {
+    return null;
+  }
+
+  return db.comment.update({
+    where: {
+      id: commentId,
+    },
+    data: {
+      message: newComment,
+    },
+  });
+}
+
+export async function DeleteComment(
+  commentId: string,
+): Promise<null | undefined> {
+  const { user } = await getAuth();
+  if (!user) {
+    return null;
+  }
+
+  const comment = await db.comment.findUnique({
+    where: {
+      id: commentId,
+    },
+    select: {
+      userId: true,
+    },
+  });
+
+  if (!comment) {
+    return null;
+  }
+
+  if (comment.userId !== user.id) {
+    return null;
+  }
+
+  await db.comment.delete({
+    where: {
+      id: commentId,
     },
   });
 }

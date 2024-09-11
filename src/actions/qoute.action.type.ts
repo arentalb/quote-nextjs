@@ -20,6 +20,7 @@ export type QuoteComments = Prisma.QouteGetPayload<{
     comments: {
       select: {
         message: true;
+        id: true;
         created_at: true;
         User: {
           select: {
