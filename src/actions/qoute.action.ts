@@ -1,7 +1,7 @@
 "use server";
 import db from "@/lib/db";
 import { QuoteComments, QuoteDetail } from "@/actions/qoute.action.type";
-import { Category, Comment } from "@prisma/client";
+import { Category, Comment, Qoute } from "@prisma/client";
 import { getAuth } from "@/lib/auth/getAuth";
 
 export async function getAllQuote(
@@ -184,6 +184,37 @@ export async function DeleteComment(
 
 export async function getAllCategories(): Promise<Category[]> {
   return db.category.findMany();
+}
+
+export async function getRecentQuotesByMe(): Promise<Qoute[] | null> {
+  const { user } = await getAuth();
+  if (!user) {
+    return null;
+  }
+  return db.qoute.findMany({
+    where: {
+      userId: user.id,
+    },
+    orderBy: {
+      updated_at: "asc",
+    },
+    take: 3,
+  });
+}
+export async function getRecentCommentsByMe(): Promise<Comment[] | null> {
+  const { user } = await getAuth();
+  if (!user) {
+    return null;
+  }
+  return db.comment.findMany({
+    where: {
+      userId: user.id,
+    },
+    orderBy: {
+      updated_at: "asc",
+    },
+    take: 3,
+  });
 }
 
 //https://www.prisma.io/docs/orm/prisma-client/type-safety/operating-against-partial-structures-of-model-types#solution

@@ -30,3 +30,10 @@ export function formatDate(
   // Format the date with the final options
   return date.toLocaleDateString("en-US", finalOptions);
 }
+
+export function truncateText(text: string, maxLength = 40) {
+  if (text.length <= maxLength) {
+    return text; // If the text is less than or equal to maxLength, return it as is
+  }
+  return text.slice(0, maxLength) + " ..."; // Otherwise, truncate and add '...'
+}
