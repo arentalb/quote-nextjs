@@ -24,7 +24,7 @@ export function formatDate(
     day: "numeric",
   };
 
-  // Merge default options with user-provided options
+  // Merge default options with auth-provided options
   const finalOptions = { ...defaultOptions, ...options };
 
   // Format the date with the final options

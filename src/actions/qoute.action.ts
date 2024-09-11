@@ -1,8 +1,8 @@
 "use server";
 import db from "@/lib/db";
-import { getUserID } from "@/lib/actions/user.action";
-import { QuoteComments, QuoteDetail } from "@/types/qoute.action.type";
+import { QuoteComments, QuoteDetail } from "@/actions/qoute.action.type";
 import { Category, Comment } from "@prisma/client";
+import { getAuth } from "@/lib/auth/getAuth";
 
 export async function getAllQuote(
   search = "",
@@ -83,6 +83,7 @@ export async function getQuoteComments(
           User: {
             select: {
               username: true,
+              id: true,
             },
           },
         },
@@ -94,13 +95,16 @@ export async function getQuoteComments(
 export async function CreateNewComment(
   message: string,
   qouteID: string,
-): Promise<Comment> {
-  const userId = await getUserID();
+): Promise<Comment | null> {
+  const { user } = await getAuth();
+  if (!user) {
+    return null;
+  }
   return db.comment.create({
     data: {
       message: message,
       qouteId: qouteID,
-      userId: userId,
+      userId: user?.id,
     },
   });
 }

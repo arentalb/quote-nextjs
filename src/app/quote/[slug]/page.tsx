@@ -2,15 +2,15 @@ import React from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Quote, Tag } from "lucide-react";
 
-import { formatDate } from "@/lib/utils";
-import { getQuoteById } from "@/lib/actions/qoute.action";
+import { formatDate } from "@/util";
+import { getQuoteById } from "@/actions/qoute.action";
 import CommentSection from "@/components/commentSection";
 import { redirect } from "next/navigation";
-import { verifySession } from "@/lib/dal";
+import { getAuth } from "@/lib/auth/getAuth";
 
 export default async function Page({ params }: { params: { slug: string } }) {
-  const auth = await verifySession();
-  if (!auth?.isAuth) {
+  const { user } = await getAuth();
+  if (!user) {
     redirect("/signup");
   }
   const quote = await getQuoteById(params.slug);

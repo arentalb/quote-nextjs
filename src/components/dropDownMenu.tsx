@@ -10,17 +10,17 @@ import {
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { logoutUser } from "@/lib/actions/auth.action";
+import { signOut } from "@/actions/auth.action";
 import { useAuth } from "@/contexts/AuthContext";
 
 export default function DropDownMenu({ links }: { links: string[] }) {
-  const { user } = useAuth();
+  const { user, loading, clearUser } = useAuth();
   return (
     <div>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="outline" size="icon">
-            {user?.username.at(0)}
+            {user?.username.charAt(0)}
           </Button>
         </DropdownMenuTrigger>
 
@@ -40,7 +40,8 @@ export default function DropDownMenu({ links }: { links: string[] }) {
             <button
               className={"text-red-600 capitalize"}
               onClick={async () => {
-                await logoutUser();
+                await signOut();
+                clearUser();
               }}
             >
               logout

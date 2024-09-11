@@ -1,12 +1,12 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { formatDate } from "@/lib/utils";
-import { CreateNewComment, getQuoteComments } from "@/lib/actions/qoute.action";
+import { formatDate } from "@/util";
+import { CreateNewComment, getQuoteComments } from "@/actions/qoute.action";
 import { Input } from "@/components/ui/input";
 import { MessageCircleOff, SendHorizontal } from "lucide-react";
 import CommentSkeleton from "@/components/skeletons/commentSkeleton";
-import { QuoteComments } from "@/types/qoute.action.type";
+import { QuoteComments } from "@/actions/qoute.action.type";
 import { useAuth } from "@/contexts/AuthContext";
 
 export default function CommentSection({ slug }: { slug: string }) {
@@ -79,7 +79,7 @@ export default function CommentSection({ slug }: { slug: string }) {
                   key={comment.message}
                   message={comment.message}
                   username={
-                    comment.User?.username === user?.username
+                    comment.User?.id === user?.id
                       ? "You"
                       : comment.User.username
                   }

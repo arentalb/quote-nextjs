@@ -20,6 +20,14 @@ model User {
   updated_at DateTime  @updatedAt
   qoutes     Qoute[]
   comments   Comment[]
+  Session    Session[]
+}
+
+model Session {
+  id        String   @id
+  expiresAt DateTime
+  userId    String
+  user      User     @relation(references: [id], fields: [userId], onDelete: Cascade)
 }
 
 model Comment {

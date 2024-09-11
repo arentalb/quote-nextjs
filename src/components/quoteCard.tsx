@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { QuoteDetail } from "@/types/qoute.action.type";
-import { formatDate } from "@/lib/utils";
+import { QuoteDetail } from "@/actions/qoute.action.type";
+import { formatDate } from "@/util";
 
 const customOptions: Intl.DateTimeFormatOptions = {
   year: "numeric",

@@ -24,6 +24,7 @@ export type QuoteComments = Prisma.QouteGetPayload<{
         User: {
           select: {
             username: true;
+            id: true;
           };
         };
       };

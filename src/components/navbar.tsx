@@ -1,22 +1,19 @@
-import { getUser, verifySession } from "@/lib/dal";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import DropDownMenu from "@/components/dropDownMenu";
-import { isAuthenticated } from "@/lib/actions/auth.action";
 import { Role } from "@/types";
 import { ModeToggle } from "@/components/modeToggle";
+import { getAuth } from "@/lib/auth/getAuth";
 
 export default async function NavBar() {
-  await verifySession();
-  const user = await getUser();
+  const { user } = await getAuth();
 
-  const authenticated = await isAuthenticated();
   let content;
 
-  if (authenticated && user?.role === Role.Admin) {
+  if (user && user?.role === Role.Admin) {
     content = <DropDownMenu links={["dashboard", "content", "profile"]} />;
-  } else if (authenticated && user?.role === Role.User) {
+  } else if (user && user?.role === Role.User) {
     content = <DropDownMenu links={["content", "profile"]} />;
   } else {
     content = (

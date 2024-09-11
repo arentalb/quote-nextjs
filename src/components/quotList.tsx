@@ -1,6 +1,6 @@
 import QuoteCard from "@/components/quoteCard";
 import React from "react";
-import { getAllQuote } from "@/lib/actions/qoute.action";
+import { getAllQuote } from "@/actions/qoute.action";
 import { FileText } from "lucide-react";
 
 export default async function QouteList({

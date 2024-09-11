@@ -9,7 +9,7 @@ import { UserFormValidation } from "@/lib/validation";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useToast } from "@/hooks/use-toast";
-import { createUser } from "@/lib/actions/auth.action";
+import { signUp } from "@/actions/auth.action";
 
 export default function SignUpForm() {
   const router = useRouter();
@@ -29,7 +29,7 @@ export default function SignUpForm() {
 
   async function onSubmit(userData: z.infer<typeof UserFormValidation>) {
     try {
-      await createUser(userData);
+      await signUp(userData);
       router.push("/");
     } catch (error: any) {
       console.log(error);

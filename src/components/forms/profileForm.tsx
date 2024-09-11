@@ -9,7 +9,7 @@ import { UserUpdateProfileValidation } from "@/lib/validation";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useToast } from "@/hooks/use-toast";
-import { updateProfile } from "@/lib/actions/user.action";
+import { updateProfile } from "@/actions/user.action";
 
 export default function ProfileForm({
   profile,
