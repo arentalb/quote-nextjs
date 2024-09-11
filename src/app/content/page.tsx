@@ -2,14 +2,16 @@ import { getAuth } from "@/lib/auth/getAuth";
 import { redirect } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { FileText, MoveRight } from "lucide-react";
+import { MessageCircleOff, MessageSquareQuote } from "lucide-react";
 import {
   getRecentCommentsByMe,
   getRecentQuotesByMe,
 } from "@/actions/qoute.action";
 import React from "react";
-import { formatDate, truncateText } from "@/util";
-import { Comment, Qoute } from "@prisma/client";
+import { truncateText } from "@/util";
+import GenericCard from "@/components/genericCard";
+import GenericCardWrapper from "@/components/genericCardWrapper";
+import MagicLink from "@/components/magicLink";
 
 export default async function Page() {
   const { user } = await getAuth();
@@ -31,117 +33,60 @@ export default async function Page() {
       <div className={"flex justify-between items-center w-full mb-8"}>
         <h1 className={"text-3xl font-bold"}>Recent quotes </h1>
         <Button asChild>
-          <Link href={"/quote/create"}>Create</Link>
+          <Link href={"/content/quotes/create"}>Create</Link>
         </Button>
       </div>
-      <div>
-        <div className={"mb-6"}>
-          {quotes.length > 0 ? (
-            <ul className="grid grid-cols-3 gap-4">
-              {quotes.map((quote) => (
-                <QuoteCard key={quote.id} quote={quote} />
-              ))}
-            </ul>
-          ) : (
-            <div className="flex justify-center flex-col items-center">
-              <FileText width={60} height={100} strokeWidth={0.5} />
-              <p>No Quote Found</p>
-            </div>
-          )}
-        </div>
-        {quotes.length !== 0 && (
-          <MagicLink href={"/all/quote"} title={"View All your qoutes"} />
-        )}
-      </div>
 
-      <div className={"flex justify-between items-center w-full mb-8 mt-20"}>
+      {quotes.length > 0 ? (
+        <GenericCardWrapper>
+          {quotes.map((quote) => (
+            <GenericCard
+              key={quote.id}
+              header={truncateText(quote.body, 50)}
+              // content={truncateText(quote.title, 60)}
+              footer={"By: you"}
+              link={`/content/quotes/edit/${quote?.id}`}
+              date={quote.created_at}
+            />
+          ))}
+        </GenericCardWrapper>
+      ) : (
+        <div className="flex justify-center flex-col items-center">
+          <MessageSquareQuote width={60} height={100} strokeWidth={0.5} />
+          <p>No Quote Found</p>
+        </div>
+      )}
+      {quotes.length !== 0 && (
+        <MagicLink href={"/content/quotes"} title={"View All your quotes"} />
+      )}
+      <div className={"flex justify-between items-center w-full mb-8 mt-8"}>
         <h1 className={"text-3xl font-bold"}>Recent comments </h1>
       </div>
-      <div>
-        <div className={"mb-6"}>
-          {comments.length > 0 ? (
-            <ul className="grid grid-cols-3 gap-4">
-              {comments.map((comment) => (
-                <CommentCard key={comment.id} comment={comment} />
-              ))}
-            </ul>
-          ) : (
-            <div className="flex justify-center flex-col items-center">
-              <FileText width={60} height={100} strokeWidth={0.5} />
-              <p>No Comment Found</p>
-            </div>
-          )}
+      {comments.length > 0 ? (
+        <GenericCardWrapper>
+          {comments.map((comment) => (
+            <GenericCard
+              key={comment.id}
+              header={truncateText(comment.message, 50)}
+              // content={truncateText(quote.title, 60)}
+              footer={"By: you"}
+              link={`/content/comment/edit/${comment?.id}`}
+              date={comment.created_at}
+            />
+          ))}
+        </GenericCardWrapper>
+      ) : (
+        <div className="flex justify-center flex-col items-center">
+          <MessageCircleOff width={60} height={100} strokeWidth={0.5} />
+          <p>No Message Found</p>
         </div>
-        {comments.length !== 0 && (
-          <MagicLink href={"/all/comment"} title={"View All your commennts"} />
-        )}
-      </div>
+      )}
+      {comments.length !== 0 && (
+        <MagicLink
+          href={"/content/comments"}
+          title={"View All your comments"}
+        />
+      )}
     </div>
   );
 }
-interface MagicLinkProps {
-  href: string;
-  title: string;
-}
-
-const customOptions: Intl.DateTimeFormatOptions = {
-  year: "numeric",
-  month: "numeric",
-  day: "numeric",
-};
-function QuoteCard({ quote }: { quote: Qoute }) {
-  return (
-    <Link
-      href={`/quote/${quote?.id}`}
-      className={
-        "px-4 py-6 flex flex-col  text-start rounded-lg border-2 border-secondary hover:border-primary hover:scale-105 transition-transform transition-border duration-300 ease-in-out focus:outline-none"
-      }
-    >
-      <p className="mb-6 text-lg font-semibold">
-        {truncateText(quote.title, 60)}
-      </p>
-      <div className="text-sm flex mt-auto justify-between  w-full items-center">
-        <p className="text-primary opacity-50">By: you</p>
-        <p className="text-primary opacity-50">
-          {formatDate(quote.created_at, customOptions)}
-        </p>
-      </div>
-    </Link>
-  );
-}
-function CommentCard({ comment }: { comment: Comment }) {
-  return (
-    <Link
-      href={`/quote/${comment?.id}`}
-      className={
-        "px-4 py-6 flex flex-col  text-start rounded-lg border-2 border-secondary hover:border-primary hover:scale-105 transition-transform transition-border duration-300 ease-in-out focus:outline-none"
-      }
-    >
-      <p className="mb-6 text-lg font-semibold">
-        {truncateText(comment.message, 60)}
-      </p>
-      <div className="text-sm flex mt-auto justify-between  w-full items-center">
-        <p className="text-primary opacity-50">By: you</p>
-        <p className="text-primary opacity-50">
-          {formatDate(comment.created_at, customOptions)}
-        </p>
-      </div>
-    </Link>
-  );
-}
-
-const MagicLink = ({ href, title }: MagicLinkProps) => {
-  return (
-    <div className="flex items-end justify-end">
-      <Link
-        href={href}
-        className="group flex items-center justify-center gap-2 text-sm text-gray-600 transition-all"
-      >
-        <p className="transition-all group-hover:scale-105 group-hover:text-gray-400">
-          {title}
-        </p>
-        <MoveRight className="w-5 h-5 transition-all group-hover:scale-105 group-hover:translate-x-2 group-hover:text-gray-400" />
-      </Link>
-    </div>
-  );
-};
