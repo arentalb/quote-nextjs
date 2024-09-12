@@ -33,3 +33,14 @@ export type QuoteComments = Prisma.QouteGetPayload<{
     };
   };
 }>;
+
+export type CommentWithQuoteId = Prisma.CommentGetPayload<{
+  select: {
+    qouteId: true;
+    message: true;
+    created_at: true;
+    updated_at: true;
+    userId: true;
+    id: true;
+  };
+}>;

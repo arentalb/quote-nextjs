@@ -70,7 +70,7 @@ export default async function Page() {
               header={truncateText(comment.message, 50)}
               // content={truncateText(quote.title, 60)}
               footer={"By: you"}
-              link={`/content/comment/edit/${comment?.id}`}
+              link={`/quote/${comment?.qouteId}`}
               date={comment.created_at}
             />
           ))}

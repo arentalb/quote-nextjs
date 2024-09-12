@@ -1,6 +1,10 @@
 "use server";
 import db from "@/lib/db";
-import { QuoteComments, QuoteDetail } from "@/actions/qoute.action.type";
+import {
+  CommentWithQuoteId,
+  QuoteComments,
+  QuoteDetail,
+} from "@/actions/qoute.action.type";
 import { Category, Comment, Qoute } from "@prisma/client";
 import { getAuth } from "@/lib/auth/getAuth";
 import { CreateQuoteParams } from "@/types";
@@ -62,6 +66,30 @@ export async function getAllQuotesByMe(): Promise<Qoute[] | null> {
   });
 }
 
+export async function getAllCommentsByMe(): Promise<
+  CommentWithQuoteId[] | null
+> {
+  const { user } = await getAuth();
+  if (!user) {
+    return null;
+  }
+  return db.comment.findMany({
+    where: {
+      userId: user.id,
+    },
+    select: {
+      qouteId: true,
+      message: true,
+      created_at: true,
+      updated_at: true,
+      userId: true,
+      id: true,
+    },
+    orderBy: {
+      updated_at: "asc",
+    },
+  });
+}
 export async function getQuoteById(id: string): Promise<QuoteDetail | null> {
   return db.qoute.findUnique({
     where: {
