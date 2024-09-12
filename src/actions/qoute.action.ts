@@ -47,6 +47,20 @@ export async function getAllQuote(
     },
   });
 }
+export async function getAllQuotesByMe(): Promise<Qoute[] | null> {
+  const { user } = await getAuth();
+  if (!user) {
+    return null;
+  }
+  return db.qoute.findMany({
+    where: {
+      userId: user.id,
+    },
+    orderBy: {
+      updated_at: "asc",
+    },
+  });
+}
 
 export async function getQuoteById(id: string): Promise<QuoteDetail | null> {
   return db.qoute.findUnique({
