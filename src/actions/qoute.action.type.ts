@@ -5,6 +5,7 @@ export type QuoteDetail = Prisma.QouteGetPayload<{
     categories: {
       select: {
         name: true;
+        id: true;
       };
     };
     User: {

@@ -41,6 +41,7 @@ export async function getAllQuote(
       categories: {
         select: {
           name: true,
+          id: true,
         },
       },
     },
@@ -56,6 +57,7 @@ export async function getQuoteById(id: string): Promise<QuoteDetail | null> {
       categories: {
         select: {
           name: true,
+          id: true,
         },
       },
       User: {
@@ -241,6 +243,41 @@ export async function creatQuote(
       author: validatedData.author,
       userId: user.id,
       categories: {
+        connect: categories.map((categoryId) => ({
+          id: categoryId,
+        })),
+      },
+    },
+  });
+}
+
+export async function updateQuote(
+  quoteId: string,
+  quoteData: CreateQuoteParams,
+  categories: string[],
+): Promise<Qoute | null> {
+  const { user } = await getAuth();
+  if (!user) {
+    throw new Error("User not authenticated");
+  }
+
+  const validatedFields = QuoteCreateValidation.safeParse(quoteData);
+
+  if (!validatedFields.success) {
+    throw new Error("Validation error");
+  }
+
+  const validatedData = validatedFields.data;
+
+  return db.qoute.update({
+    where: { id: quoteId },
+    data: {
+      title: validatedData.title,
+      body: validatedData.body,
+      author: validatedData.author,
+      userId: user.id,
+      categories: {
+        set: [],
         connect: categories.map((categoryId) => ({
           id: categoryId,
         })),
