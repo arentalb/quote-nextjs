@@ -9,16 +9,19 @@ import {
 import { Input } from "@/components/ui/input";
 import { Control } from "react-hook-form";
 import Image from "next/image";
+import { Textarea } from "@/components/ui/textarea";
 
 export enum MyFormFieldTypes {
   INPUT = "input",
   CHECKBOX = "checkbox",
+  TEXTAREA = "textarea",
 }
 interface customProps {
   control: Control<any>;
   fieldType: MyFormFieldTypes;
   name: string;
   label?: string;
+  rows?: number;
   isPassword?: boolean;
   placeHolder?: string;
   iconSrc?: string;
@@ -76,6 +79,19 @@ function RenderField({ field, props }: { field: any; props: customProps }) {
             />
           </FormControl>
         </div>
+      );
+
+    case MyFormFieldTypes.TEXTAREA:
+      return (
+        <FormControl>
+          <Textarea
+            placeholder={props.placeHolder}
+            {...field}
+            rows={props.rows}
+            disabled={props.disable}
+            className={"shad-textArea"}
+          />
+        </FormControl>
       );
   }
 }

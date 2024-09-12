@@ -27,3 +27,12 @@ export const UserUpdateProfileValidation = z.object({
     .min(2, "Name must be at least 2 characters")
     .max(50, "Name must be at most 50 characters"),
 });
+
+export const QuoteCreateValidation = z.object({
+  title: z
+    .string()
+    .min(2, "Title must be at least 2 characters")
+    .max(50, "Title must be at most 50 characters"),
+  body: z.string().min(2, "Body must be at least 2 characters"),
+  author: z.string().min(2, "Author must be at least 2 characters"),
+});

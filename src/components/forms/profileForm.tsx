@@ -3,7 +3,7 @@
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Form } from "@/components/ui/form";
-import { MyFormField, MyFormFieldTypes } from "@/components/formField";
+import { MyFormField, MyFormFieldTypes } from "@/components/myFormField";
 import SubmitButton from "@/components/submitButton";
 import { UserUpdateProfileValidation } from "@/lib/validation";
 import { useRouter } from "next/navigation";

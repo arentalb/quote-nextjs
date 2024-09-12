@@ -3,6 +3,8 @@ import db from "@/lib/db";
 import { QuoteComments, QuoteDetail } from "@/actions/qoute.action.type";
 import { Category, Comment, Qoute } from "@prisma/client";
 import { getAuth } from "@/lib/auth/getAuth";
+import { CreateQuoteParams } from "@/types";
+import { QuoteCreateValidation } from "@/lib/validation";
 
 export async function getAllQuote(
   search = "",
@@ -214,6 +216,36 @@ export async function getRecentCommentsByMe(): Promise<Comment[] | null> {
       updated_at: "asc",
     },
     take: 3,
+  });
+}
+export async function creatQuote(
+  quote: CreateQuoteParams,
+  categories: string[],
+): Promise<Qoute | null> {
+  const { user } = await getAuth();
+  if (!user) {
+    return null;
+  }
+  const validatedFields = QuoteCreateValidation.safeParse(quote);
+
+  if (!validatedFields.success) {
+    throw Error("Validation error ");
+  }
+
+  const validatedData = validatedFields.data;
+
+  return db.qoute.create({
+    data: {
+      title: validatedData.title,
+      body: validatedData.body,
+      author: validatedData.author,
+      userId: user.id,
+      categories: {
+        connect: categories.map((categoryId) => ({
+          id: categoryId,
+        })),
+      },
+    },
   });
 }
 
