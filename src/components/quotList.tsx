@@ -23,7 +23,7 @@ export default async function QuoteList({
           {quotes.map((quote) => (
             <GenericCard
               key={quote.id}
-              header={truncateText(quote.body, 50)}
+              header={truncateText(quote.title, 50)}
               // content={truncateText(quote.title, 60)}
               footer={`By : ${quote.userId === user?.id ? "You" : quote.User.username}`}
               link={`/quote/${quote?.id}`}

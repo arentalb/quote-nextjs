@@ -42,7 +42,7 @@ export default async function Page() {
           {quotes.map((quote) => (
             <GenericCard
               key={quote.id}
-              header={truncateText(quote.body, 50)}
+              header={truncateText(quote.title, 50)}
               // content={truncateText(quote.title, 60)}
               footer={"By: you"}
               link={`/content/quotes/edit/${quote?.id}`}
