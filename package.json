@@ -4,11 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
     "migrate:dev": "dotenv -e .env.local -- npx prisma migrate dev --name",
-    "seed": "node src/lib/seed.js"
+    "seed": "node src/lib/seed.js",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
