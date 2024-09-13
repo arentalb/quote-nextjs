@@ -4,6 +4,7 @@ import { UpdateProfileParams } from "@/types";
 import { UserWithOutPassword } from "@/actions/user.action.type";
 import db from "@/lib/db";
 import { getAuth } from "@/lib/auth/getAuth";
+import { redirect } from "next/navigation";
 
 export async function updateProfile(
   data: UpdateProfileParams,
@@ -23,6 +24,21 @@ export async function updateProfile(
       email: true,
       role: true,
       username: true,
+    },
+  });
+}
+
+export async function getAllUsers(): Promise<UserWithOutPassword[]> {
+  const { user } = await getAuth();
+  if (!user || user?.role !== "admin") {
+    redirect("/");
+  }
+  return db.user.findMany({
+    select: {
+      id: true,
+      username: true,
+      role: true,
+      email: true,
     },
   });
 }
