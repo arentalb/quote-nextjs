@@ -1,6 +1,7 @@
 "use server";
 import db from "@/lib/db";
 import {
+  AllComments,
   CommentWithQuoteId,
   QuoteComments,
   QuoteDetail,
@@ -136,6 +137,22 @@ export async function getQuoteComments(
               id: true,
             },
           },
+        },
+      },
+    },
+  });
+}
+
+export async function getAllComments(): Promise<AllComments[]> {
+  return db.comment.findMany({
+    select: {
+      id: true,
+      message: true,
+      qouteId: true,
+      User: {
+        select: {
+          username: true,
+          id: true,
         },
       },
     },

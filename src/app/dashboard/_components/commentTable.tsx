@@ -14,19 +14,19 @@ import { Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import useTableVisibility from "@/app/dashboard/_components/useTableVisibility";
 import TableVisibilityButton from "@/app/dashboard/_components/tableVisiblityButton";
-import { QuoteDetail } from "@/actions/qoute.action.type";
-import { truncateText } from "@/util";
+import { AllComments } from "@/actions/qoute.action.type";
 import Link from "next/link";
+import { truncateText } from "@/util";
 
-export function QuoteTable({ quote }: { quote: QuoteDetail[] }) {
+export function CommentTable({ comments }: { comments: AllComments[] }) {
   const [displayedRows, isAllRowsVisible, toggleRowVisibility] =
-    useTableVisibility(quote, 5);
+    useTableVisibility(comments, 5);
 
   return (
     <div>
       <div className={"flex justify-between items-center w-full mb-8"}>
         <h1 className={"text-3xl font-bold"}>
-          {isAllRowsVisible ? "All Quotes" : "Recent Quotes "}
+          {isAllRowsVisible ? "All Comments" : "Recent Comments "}
         </h1>
       </div>
 
@@ -40,22 +40,18 @@ export function QuoteTable({ quote }: { quote: QuoteDetail[] }) {
             </TableCaption>
             <TableHeader>
               <TableRow>
-                <TableHead>Title</TableHead>
-                <TableHead>Body</TableHead>
-                <TableHead>Author</TableHead>
-                <TableHead>Publisher</TableHead>
+                <TableHead>Comment</TableHead>
+                <TableHead>Writer</TableHead>
                 <TableHead>Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {displayedRows.map((quote) => (
-                <TableRow key={quote.id}>
-                  <TableCell>{truncateText(quote.title, 20)}</TableCell>
-                  <TableCell>{truncateText(quote.body, 20)}</TableCell>
-                  <TableCell>{quote.author}</TableCell>
-                  <TableCell>{quote.User.username}</TableCell>
+              {displayedRows.map((comment) => (
+                <TableRow key={comment.id}>
+                  <TableCell>{truncateText(comment.message, 50)}</TableCell>
+                  <TableCell>{comment.User.username}</TableCell>
                   <TableCell className={"flex  gap-4"}>
-                    <Link href={`/quote/${quote.id}`}>
+                    <Link href={`/quote/${comment.qouteId}`}>
                       <Eye width={20} height={20} />
                     </Link>
                   </TableCell>
