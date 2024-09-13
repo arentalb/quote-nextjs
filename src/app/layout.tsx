@@ -1,16 +1,17 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import type {Metadata} from "next";
+import {Poppins} from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/components/theme-provider";
+import {ThemeProvider} from "@/components/theme-provider";
 import NavBar from "@/components/navbar";
-import { Toaster } from "@/components/ui/toaster";
-import { AuthProvider } from "@/contexts/AuthContext";
+import {Toaster} from "@/components/ui/toaster";
+import {AuthProvider} from "@/contexts/AuthContext";
 
-const inter = Inter({ subsets: ["latin"] });
+const poppins = Poppins({ subsets: ["latin"] ,weight:["300","400","500","600","700","800"] });
 
 export const metadata: Metadata = {
-  title: "NextJs Social App",
-  description: "Build by Aren Talb ",
+  title: "QuoteShare",
+  description: "Share and explore quotes with ease. Join QuoteShare to post, comment, and discover inspiration.",
+
 };
 
 export default async function RootLayout({
@@ -22,7 +23,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={poppins.className}>
         <AuthProvider>
           <ThemeProvider
             attribute="class"

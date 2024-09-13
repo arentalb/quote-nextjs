@@ -9,18 +9,18 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { signOut } from "@/actions/auth.action";
-import { useAuth } from "@/contexts/AuthContext";
+import {Button} from "@/components/ui/button";
+import {signOut} from "@/actions/auth.action";
+import {useAuth} from "@/contexts/AuthContext";
 
 export default function DropDownMenu({ links }: { links: string[] }) {
-  const { user, loading, clearUser } = useAuth();
+  const { user, clearUser } = useAuth();
   return (
     <div>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="outline" size="icon">
-            {user?.username.charAt(0)}
+            {user?.username.charAt(0).toUpperCase()}
           </Button>
         </DropdownMenuTrigger>
 
