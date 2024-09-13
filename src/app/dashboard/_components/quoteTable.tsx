@@ -29,7 +29,6 @@ export function QuoteTable({ quote }: { quote: QuoteDetail[] }) {
           {isAllRowsVisible ? "All Quotes" : "Recent Quotes "}
         </h1>
       </div>
-
       <div>
         <div className="rounded-md border">
           <Table>

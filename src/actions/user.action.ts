@@ -45,3 +45,33 @@ export async function getAllUsers(): Promise<UserWithOutPassword[]> {
     },
   });
 }
+
+export async function updateUserRole(id: string, newRole: string) {
+  const { user } = await getAuth();
+  return db.user.update({
+    where: {
+      id: id,
+    },
+    data: {
+      role: newRole,
+    },
+    select: {
+      id: true,
+      email: true,
+      role: true,
+      username: true,
+    },
+  });
+}
+
+export async function deleteUser(id: string) {
+  const { user } = await getAuth();
+  if (!user || user?.role !== "admin") {
+    redirect("/");
+  }
+  return db.user.delete({
+    where: {
+      id: id,
+    },
+  });
+}

@@ -1,22 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function useTableVisibility<T>(
   data: T[],
-  numberOfVisibleRow: number = 5,
+  numberOfVisibleRows: number = 5,
 ) {
   const [isAllRowsVisible, setIsAllRowsVisible] = useState<boolean>(false);
-  const [displayedRows, setDisplayedRows] = useState<T[]>(
-    data.slice(0, numberOfVisibleRow),
-  );
+  const [displayedRows, setDisplayedRows] = useState<T[]>([]);
+
+  useEffect(() => {
+    setDisplayedRows(data.slice(0, numberOfVisibleRows));
+  }, [data, numberOfVisibleRows]);
 
   function toggleRowVisibility() {
-    setIsAllRowsVisible(!isAllRowsVisible);
-    if (isAllRowsVisible) {
-      setDisplayedRows(data.slice(0, numberOfVisibleRow));
-    } else {
-      setDisplayedRows(data);
-    }
+    setIsAllRowsVisible((prev) => !prev);
+    setDisplayedRows((prev) =>
+      isAllRowsVisible ? data.slice(0, numberOfVisibleRows) : data,
+    );
   }
 
-  return [displayedRows, isAllRowsVisible, toggleRowVisibility] as const;
+  return [
+    displayedRows,
+    isAllRowsVisible,
+    toggleRowVisibility,
+    setDisplayedRows,
+  ] as const;
 }
