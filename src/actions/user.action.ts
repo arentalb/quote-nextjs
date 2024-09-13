@@ -40,5 +40,8 @@ export async function getAllUsers(): Promise<UserWithOutPassword[]> {
       role: true,
       email: true,
     },
+    orderBy: {
+      updated_at: "desc",
+    },
   });
 }

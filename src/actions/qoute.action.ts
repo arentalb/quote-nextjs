@@ -49,6 +49,9 @@ export async function getAllQuote(
         },
       },
     },
+    orderBy: {
+      updated_at: "desc",
+    },
   });
 }
 export async function getAllQuotesByMe(): Promise<Qoute[] | null> {
