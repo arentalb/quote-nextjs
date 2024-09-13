@@ -1,8 +1,8 @@
 "use client";
 import React, { useState } from "react";
-import { badgeVariants } from "@/components/ui/badge";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Category } from "@prisma/client";
+import { Button } from "@/components/ui/button";
 
 interface CategoryListClientProps {
   categories: Category[];
@@ -37,24 +37,28 @@ export default function CategoryListClient({
 
   return (
     <div className="no-scrollbar flex gap-x-4 mb-16 overflow-x-auto whitespace-nowrap">
-      <button
-        className={`${badgeVariants({ variant: "outline" })} px-4 py-2 ${
+      <Button
+        type={"button"}
+        variant={"ghost"}
+        className={`  px-4 py-2 border-2 ${
           selectedCategory === "" ? "border-2 border-primary" : ""
         }`}
         onClick={() => handleSelectCategory("")}
       >
         All Categories
-      </button>
+      </Button>
       {categories.map((category) => (
-        <button
+        <Button
+          type={"button"}
+          variant={"ghost"}
           key={category.id}
-          className={`${badgeVariants({ variant: "outline" })} px-4 py-2 ${
+          className={` px-4 py-2 border-2  ${
             selectedCategory === category.name ? "border-2 border-primary" : ""
           }`}
           onClick={() => handleSelectCategory(category.name)}
         >
           {category.name}
-        </button>
+        </Button>
       ))}
     </div>
   );
