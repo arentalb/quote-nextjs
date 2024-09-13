@@ -1,5 +1,3 @@
-import { getAuth } from "@/lib/auth/getAuth";
-import { redirect } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { MessageSquareQuote } from "lucide-react";
@@ -10,10 +8,6 @@ import GenericCard from "@/components/genericCard";
 import GenericCardWrapper from "@/components/genericCardWrapper";
 
 export default async function Page() {
-  const { user } = await getAuth();
-  if (!user) {
-    redirect("/");
-  }
   const quotes = await getAllQuotesByMe();
 
   if (!quotes) {

@@ -1,5 +1,3 @@
-import { getAuth } from "@/lib/auth/getAuth";
-import { redirect } from "next/navigation";
 import { MessageCircleOff } from "lucide-react";
 import { getAllCommentsByMe } from "@/actions/qoute.action";
 import React from "react";
@@ -8,10 +6,6 @@ import GenericCard from "@/components/genericCard";
 import GenericCardWrapper from "@/components/genericCardWrapper";
 
 export default async function Page() {
-  const { user } = await getAuth();
-  if (!user) {
-    redirect("/");
-  }
   const comments = await getAllCommentsByMe();
 
   if (!comments) {

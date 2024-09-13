@@ -1,5 +1,3 @@
-import { getAuth } from "@/lib/auth/getAuth";
-import { redirect } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { MessageCircleOff, MessageSquareQuote } from "lucide-react";
@@ -14,10 +12,6 @@ import GenericCardWrapper from "@/components/genericCardWrapper";
 import MagicLink from "@/components/magicLink";
 
 export default async function Page() {
-  const { user } = await getAuth();
-  if (!user) {
-    redirect("/");
-  }
   const quotes = await getRecentQuotesByMe();
   const comments = await getRecentCommentsByMe();
 

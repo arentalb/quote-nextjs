@@ -1,5 +1,5 @@
 import { getAuth } from "@/lib/auth/getAuth";
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import React from "react";
 import { getAllCategories, getQuoteById } from "@/actions/qoute.action";
 import QuoteEditForm from "@/components/forms/quoteEditForm";
@@ -8,13 +8,11 @@ export const revalidate = 0;
 
 export default async function Page({ params }: { params: { id: string } }) {
   const { user } = await getAuth();
-  if (!user) {
-    redirect("/");
-  }
+
   const categories = await getAllCategories();
 
   const quote = await getQuoteById(params.id);
-  if (!quote || quote.userId !== user.id) {
+  if (!quote || quote.userId !== user?.id) {
     notFound();
   }
 
