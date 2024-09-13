@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:sqlite:C:\Users\Click\Documents\devlopment\nextjs\social-media\prisma\dev.db</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="vercel database" uuid="8cda1706-9ca3-4560-a5cd-ba3c7dce9f2d">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://ep-patient-dust-a4c75krn-pooler.us-east-1.aws.neon.tech:5432/verceldb?pgbouncer=true&amp;connect_timeout=15&amp;sslmode=require</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
