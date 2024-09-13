@@ -30,9 +30,7 @@ export default async function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <div
-              className={"max-w-[1200px] mx-auto px-4 border-2 min-h-screen"}
-            >
+            <div className={"max-w-[1200px] mx-auto px-4 min-h-screen mb-8"}>
               <NavBar />
               {children}
             </div>
