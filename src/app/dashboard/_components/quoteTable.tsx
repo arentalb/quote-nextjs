@@ -4,7 +4,6 @@ import React from "react";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -23,47 +22,44 @@ export function QuoteTable({ quote }: { quote: QuoteDetail[] }) {
     useTableVisibility(quote, 5);
 
   return (
-    <div>
-      <div className={"flex justify-between items-center w-full mb-8"}>
+    <div className={"w-auto"}>
+      <div className={"flex justify-between items-center  mb-8"}>
         <h1 className={"text-3xl font-bold"}>
           {isAllRowsVisible ? "All Quotes" : "Recent Quotes "}
         </h1>
+        <Button variant={"secondary"} onClick={toggleRowVisibility}>
+          <TableVisibilityButton isAllRowsVisible={isAllRowsVisible} />
+        </Button>
       </div>
-      <div>
-        <div className="rounded-md border">
-          <Table>
-            <TableCaption className={"mb-4"}>
-              <Button variant={"secondary"} onClick={toggleRowVisibility}>
-                <TableVisibilityButton isAllRowsVisible={isAllRowsVisible} />
-              </Button>
-            </TableCaption>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Title</TableHead>
-                <TableHead>Body</TableHead>
-                <TableHead>Author</TableHead>
-                <TableHead>Publisher</TableHead>
-                <TableHead>Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {displayedRows.map((quote) => (
-                <TableRow key={quote.id}>
-                  <TableCell>{truncateText(quote.title, 20)}</TableCell>
-                  <TableCell>{truncateText(quote.body, 20)}</TableCell>
-                  <TableCell>{quote.author}</TableCell>
-                  <TableCell>{quote.User.username}</TableCell>
-                  <TableCell className={"flex  gap-4"}>
-                    <Link href={`/quote/${quote.id}`}>
-                      <Eye width={20} height={20} />
-                    </Link>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </div>
-      </div>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Title</TableHead>
+            <TableHead>Body</TableHead>
+            <TableHead>Author</TableHead>
+            <TableHead>Publisher</TableHead>
+            <TableHead>Actions</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {displayedRows.map((quote) => (
+            <TableRow
+              className={"whitespace-nowrap text-nowrap"}
+              key={quote.id}
+            >
+              <TableCell>{truncateText(quote.title, 20)}</TableCell>
+              <TableCell>{truncateText(quote.body, 20)}</TableCell>
+              <TableCell>{quote.author}</TableCell>
+              <TableCell>{quote.User.username}</TableCell>
+              <TableCell className={"flex  gap-4 items-center"}>
+                <Link href={`/quote/${quote.id}`}>
+                  <Eye width={20} height={20} />
+                </Link>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
     </div>
   );
 }

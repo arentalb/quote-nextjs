@@ -22,21 +22,21 @@ export default async function Page({ params }: { params: { slug: string } }) {
   return (
     <div className="pb-10">
       <Card className="shadow-lg rounded-lg p-6">
-        <CardHeader className="border-b border-gray-200 pb-4 mb-10   ">
+        <CardHeader className="border-b border-gray-200 pb-4 mb-10 px-0 md:px-6  ">
           <div className={"flex justify-between items-center"}>
             <h1 className="text-3xl font-extrabold">{quote.title}</h1>
 
             <DeleteQuoteButton quoteId={quote.id} userId={quote.userId} />
           </div>
         </CardHeader>
-        <CardContent className="space-y-6">
+        <CardContent className="space-y-6 px-0 md:px-6">
           <blockquote className="relative text-lg italic max-w-2xl px-4 py-6 border-l-4 border-gray-300 rounded-lg">
             <Quote className="absolute top-2 left-4 w-6 h-6" />
             <Quote className="absolute bottom-2 right-4 w-6 h-6 transform rotate-180" />
             <p className="relative py-8">{quote.body}</p>
           </blockquote>
 
-          <div className="flex gap-8 items-center">
+          <div className="flex gap-8 flex-wrap items-center">
             <p className="text-md">
               Author: <span className="font-semibold">{quote.author}</span>
             </p>

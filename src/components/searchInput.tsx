@@ -20,7 +20,7 @@ export default function SearchInput() {
   }
 
   return (
-    <div className="relative flex flex-1 w-1/2  flex-shrink-0">
+    <div className="relative flex flex-1 md:w-1/2  w-full flex-shrink-0">
       <label htmlFor="search" className="sr-only">
         Search
       </label>

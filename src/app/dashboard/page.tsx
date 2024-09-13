@@ -9,7 +9,7 @@ export default async function Page() {
   const comments = await getAllComments();
 
   return (
-    <div className={"flex flex-col gap-8 justify-center mt-6 w-full"}>
+    <div className={"flex flex-col gap-8 justify-center mt-6 w-auto"}>
       <UserTable />
       <QuoteTable quote={quotes} />
       <CommentTable comments={comments} />

@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -76,59 +75,56 @@ export function UserTable() {
   }
 
   return (
-    <div>
-      <div className={"flex justify-between items-center w-full mb-8"}>
+    <div className={"w-auto"}>
+      <div className={"flex justify-between items-center  mb-8"}>
         <h1 className={"text-3xl font-bold"}>
           {isAllRowsVisible ? "All Users" : "Recent Users "}
         </h1>
+        <Button variant={"secondary"} onClick={toggleRowVisibility}>
+          <TableVisibilityButton isAllRowsVisible={isAllRowsVisible} />
+        </Button>
       </div>
 
       {loading ? (
         <TableSkeleton />
       ) : (
-        <div>
-          <div className="rounded-md border">
-            <Table>
-              <TableCaption className={"mb-4"}>
-                <Button variant={"secondary"} onClick={toggleRowVisibility}>
-                  <TableVisibilityButton isAllRowsVisible={isAllRowsVisible} />
-                </Button>
-              </TableCaption>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Username</TableHead>
-                  <TableHead>Email</TableHead>
-                  <TableHead>Role</TableHead>
-                  <TableHead>Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {displayedRows.map((user) => (
-                  <TableRow key={user.id}>
-                    <TableCell>{user.username}</TableCell>
-                    <TableCell>{user.email}</TableCell>
-                    <TableCell>{user.role}</TableCell>
-                    <TableCell className={"flex gap-4"}>
-                      {user.id !== loggedUser?.id && (
-                        <>
-                          <UpdateUserModel
-                            userId={user.id}
-                            handleUpdateUser={handleUpdateUser}
-                            currentRole={user.role}
-                          />
-                          <DeleteUserModel
-                            userId={user.id}
-                            handleDeleteUser={handleDeleteUser}
-                          />
-                        </>
-                      )}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-        </div>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Username</TableHead>
+              <TableHead>Email</TableHead>
+              <TableHead>Role</TableHead>
+              <TableHead>Actions</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {displayedRows.map((user) => (
+              <TableRow
+                key={user.id}
+                className={"whitespace-nowrap text-nowrap"}
+              >
+                <TableCell>{user.username}</TableCell>
+                <TableCell>{user.email}</TableCell>
+                <TableCell>{user.role}</TableCell>
+                <TableCell className={"flex gap-4 items-center"}>
+                  {user.id !== loggedUser?.id && (
+                    <>
+                      <UpdateUserModel
+                        userId={user.id}
+                        handleUpdateUser={handleUpdateUser}
+                        currentRole={user.role}
+                      />
+                      <DeleteUserModel
+                        userId={user.id}
+                        handleDeleteUser={handleDeleteUser}
+                      />
+                    </>
+                  )}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
       )}
     </div>
   );

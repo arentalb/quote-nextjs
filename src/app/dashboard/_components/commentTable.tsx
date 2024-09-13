@@ -4,7 +4,6 @@ import React from "react";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -23,44 +22,41 @@ export function CommentTable({ comments }: { comments: AllComments[] }) {
     useTableVisibility(comments, 5);
 
   return (
-    <div>
+    <div className={"w-auto"}>
       <div className={"flex justify-between items-center w-full mb-8"}>
         <h1 className={"text-3xl font-bold"}>
           {isAllRowsVisible ? "All Comments" : "Recent Comments "}
         </h1>
+        <Button variant={"secondary"} onClick={toggleRowVisibility}>
+          <TableVisibilityButton isAllRowsVisible={isAllRowsVisible} />
+        </Button>
       </div>
 
-      <div>
-        <div className="rounded-md border">
-          <Table>
-            <TableCaption className={"mb-4"}>
-              <Button variant={"secondary"} onClick={toggleRowVisibility}>
-                <TableVisibilityButton isAllRowsVisible={isAllRowsVisible} />
-              </Button>
-            </TableCaption>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Comment</TableHead>
-                <TableHead>Writer</TableHead>
-                <TableHead>Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {displayedRows.map((comment) => (
-                <TableRow key={comment.id}>
-                  <TableCell>{truncateText(comment.message, 50)}</TableCell>
-                  <TableCell>{comment.User.username}</TableCell>
-                  <TableCell className={"flex  gap-4"}>
-                    <Link href={`/quote/${comment.qouteId}`}>
-                      <Eye width={20} height={20} />
-                    </Link>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </div>
-      </div>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Comment</TableHead>
+            <TableHead>Writer</TableHead>
+            <TableHead>Actions</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {displayedRows.map((comment) => (
+            <TableRow
+              key={comment.id}
+              className={"whitespace-nowrap text-nowrap"}
+            >
+              <TableCell>{truncateText(comment.message, 50)}</TableCell>
+              <TableCell>{comment.User.username}</TableCell>
+              <TableCell className={"flex gap-4 items-center "}>
+                <Link href={`/quote/${comment.qouteId}`}>
+                  <Eye width={20} height={20} />
+                </Link>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
     </div>
   );
 }
