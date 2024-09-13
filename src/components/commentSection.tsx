@@ -161,7 +161,7 @@ function Comment({
 }: CommentProps) {
   const [editMode, setEditMode] = useState<boolean>(false);
   const [newComment, setNewComment] = useState<string>(message);
-
+  const { user } = useAuth();
   const toggleEditMode = () => setEditMode((prev) => !prev);
 
   const handleEdit = async () => {
@@ -182,8 +182,8 @@ function Comment({
           {commenterId === userId ? "You" : commenterName}
         </p>
         {/*<p>{editMode ? "Editing..." : "View Mode"}</p>*/}
-        {commenterId === userId && (
-          <div className="flex gap-4 flex-row">
+        <div className="flex gap-4 flex-row">
+          {commenterId === userId && (
             <button
               type="button"
               onClick={toggleEditMode}
@@ -191,6 +191,8 @@ function Comment({
             >
               <PenLine width={20} height={20} />
             </button>
+          )}
+          {(commenterId === userId || user?.role === "admin") && (
             <button
               type="button"
               onClick={handleDelete}
@@ -198,8 +200,8 @@ function Comment({
             >
               <Trash width={20} height={20} className="text-red-500/60" />
             </button>
-          </div>
-        )}
+          )}
+        </div>
       </CardHeader>
       <CardContent>
         {editMode ? (

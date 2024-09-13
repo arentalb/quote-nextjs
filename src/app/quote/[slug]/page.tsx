@@ -7,6 +7,7 @@ import { getQuoteById } from "@/actions/qoute.action";
 import CommentSection from "@/components/commentSection";
 import { redirect } from "next/navigation";
 import { getAuth } from "@/lib/auth/getAuth";
+import DeleteQuoteButton from "@/app/quote/[slug]/deleteQuoteButton";
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const { user } = await getAuth();
@@ -21,8 +22,12 @@ export default async function Page({ params }: { params: { slug: string } }) {
   return (
     <div className="pb-10">
       <Card className="shadow-lg rounded-lg p-6">
-        <CardHeader className="border-b border-gray-200 pb-4 mb-10">
-          <h1 className="text-3xl font-extrabold">{quote.title}</h1>
+        <CardHeader className="border-b border-gray-200 pb-4 mb-10   ">
+          <div className={"flex justify-between items-center"}>
+            <h1 className="text-3xl font-extrabold">{quote.title}</h1>
+
+            <DeleteQuoteButton quoteId={quote.id} userId={quote.userId} />
+          </div>
         </CardHeader>
         <CardContent className="space-y-6">
           <blockquote className="relative text-lg italic max-w-2xl px-4 py-6 border-l-4 border-gray-300 rounded-lg">

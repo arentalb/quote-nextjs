@@ -10,6 +10,7 @@ import { Category, Comment, Qoute } from "@prisma/client";
 import { getAuth } from "@/lib/auth/getAuth";
 import { CreateQuoteParams } from "@/types";
 import { QuoteCreateValidation } from "@/lib/validation";
+import { revalidatePath } from "next/cache";
 
 export async function getAllQuote(
   search = "",
@@ -237,7 +238,7 @@ export async function DeleteComment(
     return null;
   }
 
-  if (comment.userId !== user.id) {
+  if (comment.userId !== user.id && user.role !== "admin") {
     return null;
   }
 
@@ -348,4 +349,12 @@ export async function updateQuote(
   });
 }
 
+export async function deleteQuote(id: string) {
+  revalidatePath("/");
+  return db.qoute.delete({
+    where: {
+      id: id,
+    },
+  });
+}
 //https://www.prisma.io/docs/orm/prisma-client/type-safety/operating-against-partial-structures-of-model-types#solution

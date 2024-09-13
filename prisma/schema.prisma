@@ -38,7 +38,7 @@ model Comment {
   updated_at DateTime @updatedAt
   User       User     @relation(fields: [userId], references: [id])
   userId     String
-  Qoute      Qoute    @relation(fields: [qouteId], references: [id])
+  Qoute      Qoute    @relation(fields: [qouteId], references: [id], onDelete: Cascade)
 }
 
 model Qoute {

@@ -13,6 +13,8 @@ import { updateQuote } from "@/actions/qoute.action";
 import { Category } from "@prisma/client";
 import { Button } from "@/components/ui/button";
 import { QuoteDetail } from "@/actions/qoute.action.type";
+import Link from "next/link";
+import { Eye } from "lucide-react";
 
 export default function QuoteEditForm({
   categories,
@@ -71,6 +73,9 @@ export default function QuoteEditForm({
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 flex-1">
         <div className={"flex justify-between items-center w-full mb-8"}>
           <h1 className={"text-3xl font-bold"}>Update the Quote</h1>
+          <Link href={`/quote/${quote.id}`}>
+            <Eye width={30} height={30} />
+          </Link>
         </div>
         <MyFormField
           control={control}
