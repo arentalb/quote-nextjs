@@ -4,6 +4,8 @@ import { getAuth } from "@/lib/auth/getAuth";
 import db from "@/lib/db";
 import { Comment } from "@prisma/client";
 import { QuoteComments } from "@/actions/comment.action.type";
+import { AllComments, CommentWithQuoteId } from "@/actions/qoute.action.type";
+import { redirect } from "next/navigation";
 
 export async function getComments(id: string): Promise<QuoteComments | null> {
   const { user } = await getAuth();
@@ -29,6 +31,66 @@ export async function getComments(id: string): Promise<QuoteComments | null> {
               id: true,
             },
           },
+        },
+      },
+    },
+  });
+}
+export async function getRecentCommentsByMe(): Promise<Comment[] | null> {
+  const { user } = await getAuth();
+  if (!user) {
+    return null;
+  }
+  return db.comment.findMany({
+    where: {
+      userId: user.id,
+    },
+    orderBy: {
+      updated_at: "asc",
+    },
+    take: 3,
+  });
+}
+
+export async function getAllCommentsByMe(): Promise<
+  CommentWithQuoteId[] | null
+> {
+  const { user } = await getAuth();
+  if (!user) {
+    return null;
+  }
+  return db.comment.findMany({
+    where: {
+      userId: user.id,
+    },
+    select: {
+      qouteId: true,
+      message: true,
+      created_at: true,
+      updated_at: true,
+      userId: true,
+      id: true,
+    },
+    orderBy: {
+      updated_at: "asc",
+    },
+  });
+}
+
+export async function getAllComments(): Promise<AllComments[] | null> {
+  const { user } = await getAuth();
+  if (!user || user.role !== "admin") {
+    redirect("/");
+  }
+  return db.comment.findMany({
+    select: {
+      id: true,
+      message: true,
+      qouteId: true,
+      User: {
+        select: {
+          username: true,
+          id: true,
         },
       },
     },

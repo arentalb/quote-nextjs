@@ -1,11 +1,7 @@
 "use server";
 import db from "@/lib/db";
-import {
-  AllComments,
-  CommentWithQuoteId,
-  QuoteDetail,
-} from "@/actions/qoute.action.type";
-import { Category, Comment, Qoute } from "@prisma/client";
+import { QuoteDetail } from "@/actions/qoute.action.type";
+import { Category, Qoute } from "@prisma/client";
 import { getAuth } from "@/lib/auth/getAuth";
 import { CreateQuoteParams } from "@/types";
 import { QuoteCreateValidation } from "@/lib/schemas";
@@ -99,51 +95,6 @@ export async function getAllQuotesByMe(): Promise<Qoute[] | null> {
   });
 }
 
-export async function getAllCommentsByMe(): Promise<
-  CommentWithQuoteId[] | null
-> {
-  const { user } = await getAuth();
-  if (!user) {
-    return null;
-  }
-  return db.comment.findMany({
-    where: {
-      userId: user.id,
-    },
-    select: {
-      qouteId: true,
-      message: true,
-      created_at: true,
-      updated_at: true,
-      userId: true,
-      id: true,
-    },
-    orderBy: {
-      updated_at: "asc",
-    },
-  });
-}
-
-export async function getAllComments(): Promise<AllComments[] | null> {
-  const { user } = await getAuth();
-  if (!user) {
-    return null;
-  }
-  return db.comment.findMany({
-    select: {
-      id: true,
-      message: true,
-      qouteId: true,
-      User: {
-        select: {
-          username: true,
-          id: true,
-        },
-      },
-    },
-  });
-}
-
 export async function getAllCategories(): Promise<Category[]> {
   return db.category.findMany();
 }
@@ -163,21 +114,7 @@ export async function getRecentQuotesByMe(): Promise<Qoute[] | null> {
     take: 3,
   });
 }
-export async function getRecentCommentsByMe(): Promise<Comment[] | null> {
-  const { user } = await getAuth();
-  if (!user) {
-    return null;
-  }
-  return db.comment.findMany({
-    where: {
-      userId: user.id,
-    },
-    orderBy: {
-      updated_at: "asc",
-    },
-    take: 3,
-  });
-}
+
 export async function creatQuote(
   quote: CreateQuoteParams,
   categories: string[],
@@ -189,7 +126,7 @@ export async function creatQuote(
   const validatedFields = QuoteCreateValidation.safeParse(quote);
 
   if (!validatedFields.success) {
-    throw Error("Validation error ");
+    return null;
   }
 
   const validatedData = validatedFields.data;
@@ -216,13 +153,13 @@ export async function updateQuote(
 ): Promise<Qoute | null> {
   const { user } = await getAuth();
   if (!user) {
-    throw new Error("User not authenticated");
+    return null;
   }
 
   const validatedFields = QuoteCreateValidation.safeParse(quoteData);
 
   if (!validatedFields.success) {
-    throw new Error("Validation error");
+    return null;
   }
 
   const validatedData = validatedFields.data;
@@ -245,6 +182,10 @@ export async function updateQuote(
 }
 
 export async function deleteQuote(id: string) {
+  const { user } = await getAuth();
+  if (!user) {
+    return null;
+  }
   revalidatePath("/");
   redirect("/");
   return db.qoute.delete({

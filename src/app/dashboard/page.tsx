@@ -1,8 +1,9 @@
 import React from "react";
 import { UserTable } from "@/app/dashboard/_components/userTable";
-import { getAllComments, getAllQuote } from "@/actions/qoute.action";
+import { getAllQuote } from "@/actions/qoute.action";
 import { QuoteTable } from "@/app/dashboard/_components/quoteTable";
 import { CommentTable } from "@/app/dashboard/_components/commentTable";
+import { getAllComments } from "@/actions/comment.action";
 
 export default async function Page() {
   const quotes = await getAllQuote();

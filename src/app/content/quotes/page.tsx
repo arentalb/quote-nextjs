@@ -1,9 +1,9 @@
-import {Button} from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import {MessageSquareQuote} from "lucide-react";
-import {getAllQuotesByMe} from "@/actions/qoute.action";
+import { MessageSquareQuote } from "lucide-react";
+import { getAllQuotesByMe } from "@/actions/qoute.action";
 import React from "react";
-import {truncateText} from "@/lib/utils";
+import { truncateText } from "@/lib/utils";
 import GenericCard from "@/components/genericCard";
 import GenericCardWrapper from "@/components/genericCardWrapper";
 
@@ -29,7 +29,6 @@ export default async function Page() {
             <GenericCard
               key={quote.id}
               header={truncateText(quote.body, 50)}
-              // content={truncateText(quote.title, 60)}
               footer={"By: you"}
               link={`/content/quotes/edit/${quote?.id}`}
               date={quote.created_at}

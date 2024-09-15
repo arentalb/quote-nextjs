@@ -1,9 +1,9 @@
-import {MessageCircleOff} from "lucide-react";
-import {getAllCommentsByMe} from "@/actions/qoute.action";
+import { MessageCircleOff } from "lucide-react";
 import React from "react";
-import {truncateText} from "@/lib/utils";
+import { truncateText } from "@/lib/utils";
 import GenericCard from "@/components/genericCard";
 import GenericCardWrapper from "@/components/genericCardWrapper";
+import { getAllCommentsByMe } from "@/actions/comment.action";
 
 export default async function Page() {
   const comments = await getAllCommentsByMe();
@@ -23,7 +23,6 @@ export default async function Page() {
             <GenericCard
               key={comment.id}
               header={truncateText(comment.message, 50)}
-              // content={truncateText(quote.title, 60)}
               footer={"By: you"}
               link={`/quote/${comment?.qouteId}`}
               date={comment.created_at}
