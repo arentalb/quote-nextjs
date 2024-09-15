@@ -2,8 +2,8 @@
 
 import { useForm } from "react-hook-form";
 import { Form } from "@/components/ui/form";
-import { MyFormField, MyFormFieldTypes } from "@/components/myFormField";
-import SubmitButton from "@/components/submitButton";
+import { MyFormField, MyFormFieldTypes } from "@/components/shared/myFormField";
+import SubmitButton from "@/components/shared/submitButton";
 import { SignInFormData, SignInFormSchema } from "@/lib/schemas";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";

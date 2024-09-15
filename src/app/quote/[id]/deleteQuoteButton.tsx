@@ -5,7 +5,7 @@ import { Trash } from "lucide-react";
 import { useAuth } from "@/lib/auth/AuthContext";
 import { deleteQuote } from "@/actions/qoute.action";
 import { useToast } from "@/hooks/use-toast";
-import LoadingSpinner from "@/components/loadingSpinner";
+import LoadingSpinner from "@/components/shared/loadingSpinner";
 import { useRouter } from "next/navigation";
 
 export default function DeleteQuoteButton({ quoteId }: { quoteId: string }) {

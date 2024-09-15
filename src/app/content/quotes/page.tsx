@@ -4,8 +4,8 @@ import { MessageSquareQuote } from "lucide-react";
 import { getAllQuotesByMe } from "@/actions/qoute.action";
 import React from "react";
 import { truncateText } from "@/lib/utils";
-import GenericCard from "@/components/genericCard";
-import GenericCardWrapper from "@/components/genericCardWrapper";
+import GenericCard from "@/components/shared/genericCard";
+import GenericCardWrapper from "@/components/shared/genericCardWrapper";
 
 export default async function Page() {
   const quotes = await getAllQuotesByMe();

@@ -7,7 +7,7 @@ import { MessageCircleOff, SendHorizontal } from "lucide-react";
 import CommentSkeleton from "@/components/skeletons/commentSkeleton";
 import { useAuth } from "@/lib/auth/AuthContext";
 import { useToast } from "@/hooks/use-toast";
-import Comment from "@/components/comment";
+import Comment from "@/app/quote/[id]/_components/comment";
 import {
   createNewComment,
   deleteComment,

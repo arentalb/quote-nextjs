@@ -1,7 +1,7 @@
 import { useAuth } from "@/lib/auth/AuthContext";
 import React, { useState } from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import LoadingSpinner from "@/components/loadingSpinner";
+import LoadingSpinner from "@/components/shared/loadingSpinner";
 import { PenLine, SendHorizontal, Trash } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { formatDate } from "@/lib/utils";

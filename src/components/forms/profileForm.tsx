@@ -1,15 +1,15 @@
 "use client";
 
-import {useForm} from "react-hook-form";
-import {z} from "zod";
-import {Form} from "@/components/ui/form";
-import {MyFormField, MyFormFieldTypes} from "@/components/myFormField";
-import SubmitButton from "@/components/submitButton";
-import {UserUpdateProfileValidation} from "@/lib/schemas";
-import {useRouter} from "next/navigation";
-import {zodResolver} from "@hookform/resolvers/zod";
-import {useToast} from "@/hooks/use-toast";
-import {updateProfile} from "@/actions/user.action";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { Form } from "@/components/ui/form";
+import { MyFormField, MyFormFieldTypes } from "@/components/shared/myFormField";
+import SubmitButton from "@/components/shared/submitButton";
+import { UserUpdateProfileValidation } from "@/lib/schemas";
+import { useRouter } from "next/navigation";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useToast } from "@/hooks/use-toast";
+import { updateProfile } from "@/actions/user.action";
 
 export default function ProfileForm({
   profile,

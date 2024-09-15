@@ -1,8 +1,8 @@
 import { MessageCircleOff } from "lucide-react";
 import React from "react";
 import { truncateText } from "@/lib/utils";
-import GenericCard from "@/components/genericCard";
-import GenericCardWrapper from "@/components/genericCardWrapper";
+import GenericCard from "@/components/shared/genericCard";
+import GenericCardWrapper from "@/components/shared/genericCardWrapper";
 import { getAllCommentsByMe } from "@/actions/comment.action";
 
 export default async function Page() {

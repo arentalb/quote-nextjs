@@ -4,7 +4,7 @@ import { Quote, Tag } from "lucide-react";
 
 import { formatDate } from "@/lib/utils";
 import { getQuoteById } from "@/actions/qoute.action";
-import CommentSection from "@/components/commentSection";
+import CommentSection from "@/app/quote/[id]/_components/commentSection";
 import { notFound, redirect } from "next/navigation";
 import { getAuth } from "@/lib/auth/getAuth";
 import DeleteQuoteButton from "@/app/quote/[id]/deleteQuoteButton";

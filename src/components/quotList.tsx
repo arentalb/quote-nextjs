@@ -1,7 +1,7 @@
 import React from "react";
 import { MessageSquareQuote } from "lucide-react";
-import GenericCardWrapper from "@/components/genericCardWrapper";
-import GenericCard from "@/components/genericCard";
+import GenericCardWrapper from "@/components/shared/genericCardWrapper";
+import GenericCard from "@/components/shared/genericCard";
 import { truncateText } from "@/lib/utils";
 import { getAuth } from "@/lib/auth/getAuth";
 import { QuoteDetail } from "@/actions/qoute.action.type";
