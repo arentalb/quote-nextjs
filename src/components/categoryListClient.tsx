@@ -4,7 +4,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Category } from "@prisma/client";
 import { Button } from "@/components/ui/button";
 
-interface CategoryListClientProps {
+interface CategoryListProps {
   categories: Category[];
   selectedCategory: string;
 }
@@ -12,7 +12,7 @@ interface CategoryListClientProps {
 export default function CategoryListClient({
   categories,
   selectedCategory: initialSelectedCategory,
-}: CategoryListClientProps) {
+}: CategoryListProps) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
@@ -22,7 +22,7 @@ export default function CategoryListClient({
   );
 
   function handleSelectCategory(category: string) {
-    const newSelectedCategory = selectedCategory === category ? "" : category; // Deselect if the same category is clicked
+    const newSelectedCategory = selectedCategory === category ? "" : category;
     setSelectedCategory(newSelectedCategory);
 
     const params = new URLSearchParams(searchParams.toString());
@@ -31,7 +31,6 @@ export default function CategoryListClient({
     } else {
       params.delete("category");
     }
-
     router.replace(`${pathname}?${params.toString()}`);
   }
 

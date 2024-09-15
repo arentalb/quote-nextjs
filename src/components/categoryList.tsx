@@ -1,19 +1,64 @@
-import React from "react";
-import { getAllCategories } from "@/actions/qoute.action";
-import CategoryListClient from "./categoryListClient";
+"use client";
+import React, { useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { Category } from "@prisma/client";
+import { Button } from "@/components/ui/button";
 
-export default async function CategoryList({
-  selectedCategory,
-}: {
+interface CategoryListProps {
+  categories: Category[];
   selectedCategory: string;
-}) {
-  const categories = await getAllCategories();
+}
+
+export default function CategoryList({
+  categories,
+  selectedCategory: initialSelectedCategory,
+}: CategoryListProps) {
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const [selectedCategory, setSelectedCategory] = useState<string>(
+    initialSelectedCategory,
+  );
+
+  function handleSelectCategory(category: string, id: string) {
+    const newSelectedCategory = selectedCategory === category ? "" : category;
+    setSelectedCategory(id);
+
+    const params = new URLSearchParams(searchParams.toString());
+    if (newSelectedCategory) {
+      params.set("category", newSelectedCategory);
+    } else {
+      params.delete("category");
+    }
+    router.replace(`${pathname}?${params.toString()}`);
+  }
+
   return (
-    <>
-      <CategoryListClient
-        categories={categories}
-        selectedCategory={selectedCategory}
-      />
-    </>
+    <div className="no-scrollbar flex gap-x-4 mb-16 overflow-x-auto whitespace-nowrap">
+      <Button
+        type={"button"}
+        variant={"ghost"}
+        className={`  px-4 py-2 border-2 ${
+          selectedCategory === "" ? "border-2 border-primary" : ""
+        }`}
+        onClick={() => handleSelectCategory("", "")}
+      >
+        All Categories
+      </Button>
+      {categories.map((category) => (
+        <Button
+          type={"button"}
+          variant={"ghost"}
+          key={category.id}
+          className={` px-4 py-2 border-2  ${
+            selectedCategory === category.id ? "border-2 border-primary" : ""
+          }`}
+          onClick={() => handleSelectCategory(category.name, category.id)}
+        >
+          {category.name}
+        </Button>
+      ))}
+    </div>
   );
 }
