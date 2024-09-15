@@ -1,6 +1,7 @@
 import { z } from "zod";
 
-export const UserFormValidation = z.object({
+export type SignUpFormData = z.infer<typeof SignUpFormSchema>;
+export const SignUpFormSchema = z.object({
   username: z
     .string()
     .min(2, "Name must be at least 2 characters")

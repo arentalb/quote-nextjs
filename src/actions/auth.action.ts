@@ -2,15 +2,15 @@
 
 import db from "@/lib/db";
 import bcrypt from "bcrypt";
-import { Role, SignInUserParams, SignUpUserParams } from "@/types";
+import { SignUpFormData, SignUpFormSchema } from "@/lib/schemas";
+import { Role, SignInUserParams } from "@/types";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { lucia } from "@/lib/auth/lucia";
 import { getAuth } from "@/lib/auth/getAuth";
-import { UserFormValidation } from "@/lib/schemas";
 
-export async function signUp(user: SignUpUserParams) {
-  const validatedFields = UserFormValidation.safeParse(user);
+export async function signUp(user: SignUpFormData) {
+  const validatedFields = SignUpFormSchema.safeParse(user);
 
   if (!validatedFields.success) {
     throw Error("Validation error ");
@@ -41,7 +41,7 @@ export async function signUp(user: SignUpUserParams) {
     if (error.code === "P2002") {
       throw Error("User already exists ");
     } else {
-      throw Error("Failed to create auth");
+      throw Error("Failed to create user");
     }
   }
 

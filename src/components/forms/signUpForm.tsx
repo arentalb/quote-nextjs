@@ -4,19 +4,18 @@ import { useForm } from "react-hook-form";
 import { Form } from "@/components/ui/form";
 import { MyFormField, MyFormFieldTypes } from "@/components/myFormField";
 import SubmitButton from "@/components/submitButton";
-import { UserFormValidation } from "@/lib/schemas";
+import { SignUpFormData, SignUpFormSchema } from "@/lib/schemas";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useToast } from "@/hooks/use-toast";
 import { signUp } from "@/actions/auth.action";
-import { z } from "zod";
 
 export default function SignUpForm() {
   const router = useRouter();
   const { toast } = useToast();
 
-  const form = useForm<z.infer<typeof UserFormValidation>>({
-    resolver: zodResolver(UserFormValidation),
+  const form = useForm<SignUpFormData>({
+    resolver: zodResolver(SignUpFormSchema),
     defaultValues: {
       username: "",
       email: "",
@@ -24,10 +23,13 @@ export default function SignUpForm() {
     },
   });
 
-  const { handleSubmit, control, formState } = form;
-  const { isSubmitting, errors } = formState;
+  const {
+    handleSubmit,
+    control,
+    formState: { isSubmitting },
+  } = form;
 
-  async function onSubmit(userData: z.infer<typeof UserFormValidation>) {
+  async function onSubmit(userData: SignUpFormData) {
     try {
       await signUp(userData);
       router.push("/");
