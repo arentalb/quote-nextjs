@@ -13,7 +13,8 @@ export const SignUpFormSchema = z.object({
     .max(50, "password must be at most 50 characters"),
 });
 
-export const UserLoginFormValidation = z.object({
+export type SignInFormData = z.infer<typeof SignInFormSchema>;
+export const SignInFormSchema = z.object({
   email: z.string().email("Invalid email address"),
   password: z
     .string()

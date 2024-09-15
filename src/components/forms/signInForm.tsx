@@ -1,49 +1,45 @@
 "use client";
 
-import {useForm} from "react-hook-form";
-import {z} from "zod";
-import {Form} from "@/components/ui/form";
-import {MyFormField, MyFormFieldTypes} from "@/components/myFormField";
+import { useForm } from "react-hook-form";
+import { Form } from "@/components/ui/form";
+import { MyFormField, MyFormFieldTypes } from "@/components/myFormField";
 import SubmitButton from "@/components/submitButton";
-import {UserLoginFormValidation} from "@/lib/schemas";
-import {useRouter} from "next/navigation";
-import {zodResolver} from "@hookform/resolvers/zod";
-import {useToast} from "@/hooks/use-toast";
-import {useAuth} from "@/lib/auth/AuthContext";
-import {signIn} from "@/actions/auth.action";
+import { SignInFormData, SignInFormSchema } from "@/lib/schemas";
+import { useRouter } from "next/navigation";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/lib/auth/AuthContext";
+import { signIn } from "@/actions/auth.action";
 
 export default function SignInForm() {
   const router = useRouter();
+  const { toast } = useToast();
   const { refreshUser } = useAuth();
 
-  const { toast } = useToast();
-  const form = useForm<z.infer<typeof UserLoginFormValidation>>({
-    resolver: zodResolver(UserLoginFormValidation),
+  const form = useForm<SignInFormData>({
+    resolver: zodResolver(SignInFormSchema),
     defaultValues: {
       email: "",
       password: "",
     },
   });
 
-  const { handleSubmit, control, formState } = form;
-  const { isSubmitting, errors } = formState;
+  const {
+    handleSubmit,
+    control,
+    formState: { isSubmitting },
+  } = form;
 
-  async function onSubmit(userData: z.infer<typeof UserLoginFormValidation>) {
+  async function onSubmit(userData: SignInFormData) {
     try {
       await signIn(userData);
       await refreshUser();
-
       router.push("/");
     } catch (error: any) {
-      console.log(error);
       toast({
         title: error.message,
         variant: "destructive",
       });
-      // form.setError("root", {
-      //   type: "manual",
-      //   message: error.message,
-      // });
     }
   }
 

@@ -2,8 +2,12 @@
 
 import db from "@/lib/db";
 import bcrypt from "bcrypt";
-import { SignUpFormData, SignUpFormSchema } from "@/lib/schemas";
-import { Role, SignInUserParams } from "@/types";
+import {
+  SignInFormData,
+  SignUpFormData,
+  SignUpFormSchema,
+} from "@/lib/schemas";
+import { Role } from "@/types";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { lucia } from "@/lib/auth/lucia";
@@ -48,7 +52,7 @@ export async function signUp(user: SignUpFormData) {
   redirect("/");
 }
 
-export async function signIn(user: SignInUserParams) {
+export async function signIn(user: SignInFormData) {
   const checkedUser = await db.user.findUnique({
     where: { email: user.email },
   });
@@ -61,7 +65,7 @@ export async function signIn(user: SignInUserParams) {
     checkedUser.password,
   );
   if (!validPassword) {
-    throw Error("Wrong password ");
+    throw Error("Wrong password");
   }
 
   const session = await lucia.createSession(checkedUser.id, {});
