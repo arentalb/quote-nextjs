@@ -1,12 +1,12 @@
 import React from "react";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Quote, Tag } from "lucide-react";
+import {Card, CardContent, CardHeader} from "@/components/ui/card";
+import {Quote, Tag} from "lucide-react";
 
-import { formatDate } from "@/util";
-import { getQuoteById } from "@/actions/qoute.action";
+import {formatDate} from "@/lib/utils";
+import {getQuoteById} from "@/actions/qoute.action";
 import CommentSection from "@/components/commentSection";
-import { redirect } from "next/navigation";
-import { getAuth } from "@/lib/auth/getAuth";
+import {redirect} from "next/navigation";
+import {getAuth} from "@/lib/auth/getAuth";
 import DeleteQuoteButton from "@/app/quote/[slug]/deleteQuoteButton";
 
 export default async function Page({ params }: { params: { slug: string } }) {

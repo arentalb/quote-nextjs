@@ -4,7 +4,7 @@ import "./globals.css";
 import {ThemeProvider} from "@/components/theme-provider";
 import NavBar from "@/components/navbar";
 import {Toaster} from "@/components/ui/toaster";
-import {AuthProvider} from "@/contexts/AuthContext";
+import {AuthProvider} from "@/lib/auth/AuthContext";
 
 const poppins = Poppins({ subsets: ["latin"] ,weight:["300","400","500","600","700","800"] });
 

@@ -1,20 +1,13 @@
 "use client";
 import React from "react";
 
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Eye } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow,} from "@/components/ui/table";
+import {Eye} from "lucide-react";
+import {Button} from "@/components/ui/button";
 import useTableVisibility from "@/app/dashboard/_components/useTableVisibility";
 import TableVisibilityButton from "@/app/dashboard/_components/tableVisiblityButton";
-import { QuoteDetail } from "@/actions/qoute.action.type";
-import { truncateText } from "@/util";
+import {QuoteDetail} from "@/actions/qoute.action.type";
+import {truncateText} from "@/lib/utils";
 import Link from "next/link";
 
 export function QuoteTable({ quote }: { quote: QuoteDetail[] }) {

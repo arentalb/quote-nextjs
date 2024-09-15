@@ -1,10 +1,10 @@
 import React from "react";
-import { getAllQuote } from "@/actions/qoute.action";
-import { MessageSquareQuote } from "lucide-react";
+import {getAllQuote} from "@/actions/qoute.action";
+import {MessageSquareQuote} from "lucide-react";
 import GenericCardWrapper from "@/components/genericCardWrapper";
 import GenericCard from "@/components/genericCard";
-import { truncateText } from "@/util";
-import { getAuth } from "@/lib/auth/getAuth";
+import {truncateText} from "@/lib/utils";
+import {getAuth} from "@/lib/auth/getAuth";
 
 export default async function QuoteList({
   query,

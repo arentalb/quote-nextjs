@@ -2,12 +2,12 @@
 
 import db from "@/lib/db";
 import bcrypt from "bcrypt";
-import { UserFormValidation } from "@/lib/validation";
 import { Role, SignInUserParams, SignUpUserParams } from "@/types";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { lucia } from "@/lib/auth/lucia";
 import { getAuth } from "@/lib/auth/getAuth";
+import { UserFormValidation } from "@/lib/schemas";
 
 export async function signUp(user: SignUpUserParams) {
   const validatedFields = UserFormValidation.safeParse(user);

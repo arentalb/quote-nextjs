@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:postgresql://ep-patient-dust-a4c75krn-pooler.us-east-1.aws.neon.tech:5432/verceldb?pgbouncer=true&amp;connect_timeout=15&amp;sslmode=require</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="quote@localhost" uuid="15a33534-1eb1-4593-857f-d824191bc758">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/quote</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>

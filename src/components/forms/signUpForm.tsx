@@ -1,15 +1,15 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { Form } from "@/components/ui/form";
 import { MyFormField, MyFormFieldTypes } from "@/components/myFormField";
 import SubmitButton from "@/components/submitButton";
-import { UserFormValidation } from "@/lib/validation";
+import { UserFormValidation } from "@/lib/schemas";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useToast } from "@/hooks/use-toast";
 import { signUp } from "@/actions/auth.action";
+import { z } from "zod";
 
 export default function SignUpForm() {
   const router = useRouter();
@@ -32,15 +32,10 @@ export default function SignUpForm() {
       await signUp(userData);
       router.push("/");
     } catch (error: any) {
-      console.log(error);
       toast({
         title: error.message,
         variant: "destructive",
       });
-      // form.setError("root", {
-      //   type: "manual",
-      //   message: error.message,
-      // });
     }
   }
 
@@ -73,7 +68,6 @@ export default function SignUpForm() {
           label={"Password"}
           placeHolder={"***********"}
         />
-
         <SubmitButton isLoading={isSubmitting}>Sign Up</SubmitButton>
       </form>
     </Form>

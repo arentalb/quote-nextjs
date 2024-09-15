@@ -1,13 +1,7 @@
 import Link from "next/link";
-import { formatDate, truncateText } from "@/util";
+import {formatDate, truncateText} from "@/lib/utils";
 import React from "react";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import {Card, CardContent, CardFooter, CardHeader, CardTitle,} from "@/components/ui/card";
 
 interface GenericCardProps {
   header: string;

@@ -1,16 +1,16 @@
 "use client";
 
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { Form } from "@/components/ui/form";
-import { MyFormField, MyFormFieldTypes } from "@/components/myFormField";
+import {useForm} from "react-hook-form";
+import {z} from "zod";
+import {Form} from "@/components/ui/form";
+import {MyFormField, MyFormFieldTypes} from "@/components/myFormField";
 import SubmitButton from "@/components/submitButton";
-import { UserLoginFormValidation } from "@/lib/validation";
-import { useRouter } from "next/navigation";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useToast } from "@/hooks/use-toast";
-import { useAuth } from "@/contexts/AuthContext";
-import { signIn } from "@/actions/auth.action";
+import {UserLoginFormValidation} from "@/lib/schemas";
+import {useRouter} from "next/navigation";
+import {zodResolver} from "@hookform/resolvers/zod";
+import {useToast} from "@/hooks/use-toast";
+import {useAuth} from "@/lib/auth/AuthContext";
+import {signIn} from "@/actions/auth.action";
 
 export default function SignInForm() {
   const router = useRouter();

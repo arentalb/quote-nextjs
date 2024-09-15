@@ -1,9 +1,9 @@
-import { Button } from "@/components/ui/button";
+import {Button} from "@/components/ui/button";
 import Link from "next/link";
-import { MessageSquareQuote } from "lucide-react";
-import { getAllQuotesByMe } from "@/actions/qoute.action";
+import {MessageSquareQuote} from "lucide-react";
+import {getAllQuotesByMe} from "@/actions/qoute.action";
 import React from "react";
-import { truncateText } from "@/util";
+import {truncateText} from "@/lib/utils";
 import GenericCard from "@/components/genericCard";
 import GenericCardWrapper from "@/components/genericCardWrapper";
 

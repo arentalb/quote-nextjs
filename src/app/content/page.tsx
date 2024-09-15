@@ -3,7 +3,7 @@ import Link from "next/link";
 import {MessageCircleOff, MessageSquareQuote} from "lucide-react";
 import {getRecentCommentsByMe, getRecentQuotesByMe,} from "@/actions/qoute.action";
 import React from "react";
-import {truncateText} from "@/util";
+import {truncateText} from "@/lib/utils";
 import GenericCard from "@/components/genericCard";
 import GenericCardWrapper from "@/components/genericCardWrapper";
 import MagicLink from "@/components/magicLink";

@@ -1,20 +1,20 @@
 "use client";
-import { MyFormField, MyFormFieldTypes } from "@/components/myFormField";
-import { useRouter } from "next/navigation";
-import { useToast } from "@/hooks/use-toast";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { QuoteCreateValidation } from "@/lib/validation";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Form } from "@/components/ui/form";
+import {MyFormField, MyFormFieldTypes} from "@/components/myFormField";
+import {useRouter} from "next/navigation";
+import {useToast} from "@/hooks/use-toast";
+import {useForm} from "react-hook-form";
+import {z} from "zod";
+import {QuoteCreateValidation} from "@/lib/schemas";
+import {zodResolver} from "@hookform/resolvers/zod";
+import {Form} from "@/components/ui/form";
 import SubmitButton from "@/components/submitButton";
-import React, { useEffect, useState } from "react";
-import { updateQuote } from "@/actions/qoute.action";
-import { Category } from "@prisma/client";
-import { Button } from "@/components/ui/button";
-import { QuoteDetail } from "@/actions/qoute.action.type";
+import React, {useEffect, useState} from "react";
+import {updateQuote} from "@/actions/qoute.action";
+import {Category} from "@prisma/client";
+import {Button} from "@/components/ui/button";
+import {QuoteDetail} from "@/actions/qoute.action.type";
 import Link from "next/link";
-import { Eye } from "lucide-react";
+import {Eye} from "lucide-react";
 
 export default function QuoteEditForm({
   categories,

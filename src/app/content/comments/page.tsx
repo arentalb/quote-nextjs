@@ -1,7 +1,7 @@
-import { MessageCircleOff } from "lucide-react";
-import { getAllCommentsByMe } from "@/actions/qoute.action";
+import {MessageCircleOff} from "lucide-react";
+import {getAllCommentsByMe} from "@/actions/qoute.action";
 import React from "react";
-import { truncateText } from "@/util";
+import {truncateText} from "@/lib/utils";
 import GenericCard from "@/components/genericCard";
 import GenericCardWrapper from "@/components/genericCardWrapper";
 

@@ -1,19 +1,14 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { formatDate } from "@/util";
-import {
-  CreateNewComment,
-  DeleteComment,
-  getQuoteComments,
-  UpdateComment,
-} from "@/actions/qoute.action";
-import { Input } from "@/components/ui/input";
-import { MessageCircleOff, PenLine, SendHorizontal, Trash } from "lucide-react";
+import React, {useEffect, useState} from "react";
+import {Card, CardContent, CardHeader} from "@/components/ui/card";
+import {formatDate} from "@/lib/utils";
+import {CreateNewComment, DeleteComment, getQuoteComments, UpdateComment,} from "@/actions/qoute.action";
+import {Input} from "@/components/ui/input";
+import {MessageCircleOff, PenLine, SendHorizontal, Trash} from "lucide-react";
 import CommentSkeleton from "@/components/skeletons/commentSkeleton";
-import { QuoteComments } from "@/actions/qoute.action.type";
-import { useAuth } from "@/contexts/AuthContext";
-import { useToast } from "@/hooks/use-toast";
+import {QuoteComments} from "@/actions/qoute.action.type";
+import {useAuth} from "@/lib/auth/AuthContext";
+import {useToast} from "@/hooks/use-toast";
 
 export default function CommentSection({ slug }: { slug: string }) {
   const [data, setData] = useState<QuoteComments | null>(null);

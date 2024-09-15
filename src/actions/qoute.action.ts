@@ -1,16 +1,11 @@
 "use server";
 import db from "@/lib/db";
-import {
-  AllComments,
-  CommentWithQuoteId,
-  QuoteComments,
-  QuoteDetail,
-} from "@/actions/qoute.action.type";
-import { Category, Comment, Qoute } from "@prisma/client";
-import { getAuth } from "@/lib/auth/getAuth";
-import { CreateQuoteParams } from "@/types";
-import { QuoteCreateValidation } from "@/lib/validation";
-import { revalidatePath } from "next/cache";
+import {AllComments, CommentWithQuoteId, QuoteComments, QuoteDetail,} from "@/actions/qoute.action.type";
+import {Category, Comment, Qoute} from "@prisma/client";
+import {getAuth} from "@/lib/auth/getAuth";
+import {CreateQuoteParams} from "@/types";
+import {QuoteCreateValidation} from "@/lib/schemas";
+import {revalidatePath} from "next/cache";
 
 export async function getAllQuote(
   search = "",

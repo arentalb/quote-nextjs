@@ -1,21 +1,14 @@
 "use client";
 import React from "react";
 
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Eye } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow,} from "@/components/ui/table";
+import {Eye} from "lucide-react";
+import {Button} from "@/components/ui/button";
 import useTableVisibility from "@/app/dashboard/_components/useTableVisibility";
 import TableVisibilityButton from "@/app/dashboard/_components/tableVisiblityButton";
-import { AllComments } from "@/actions/qoute.action.type";
+import {AllComments} from "@/actions/qoute.action.type";
 import Link from "next/link";
-import { truncateText } from "@/util";
+import {truncateText} from "@/lib/utils";
 
 export function CommentTable({ comments }: { comments: AllComments[] }) {
   const [displayedRows, isAllRowsVisible, toggleRowVisibility] =

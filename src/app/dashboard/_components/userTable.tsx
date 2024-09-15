@@ -1,23 +1,16 @@
 "use client"; // Ensure this is at the top
 
-import React, { useEffect, useState } from "react";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
+import React, {useEffect, useState} from "react";
+import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow,} from "@/components/ui/table";
+import {Button} from "@/components/ui/button";
 import useTableVisibility from "@/app/dashboard/_components/useTableVisibility";
 import TableVisibilityButton from "@/app/dashboard/_components/tableVisiblityButton";
 import DeleteUserModel from "@/app/dashboard/_components/deleteUserModel";
-import { deleteUser, getAllUsers, updateUserRole } from "@/actions/user.action";
-import { UserWithOutPassword } from "@/actions/user.action.type";
+import {deleteUser, getAllUsers, updateUserRole} from "@/actions/user.action";
+import {UserWithOutPassword} from "@/actions/user.action.type";
 import TableSkeleton from "@/components/skeletons/tableSkeleton";
 import UpdateUserModel from "@/app/dashboard/_components/updateUserModel";
-import { useAuth } from "@/contexts/AuthContext";
+import {useAuth} from "@/lib/auth/AuthContext";
 
 export function UserTable() {
   const [userList, setUserList] = useState<UserWithOutPassword[]>([]);

@@ -1,9 +1,9 @@
 "use client";
-import { Trash } from "lucide-react";
-import React, { useState } from "react";
-import { useAuth } from "@/contexts/AuthContext";
-import { deleteQuote } from "@/actions/qoute.action";
-import { useRouter } from "next/navigation";
+import {Trash} from "lucide-react";
+import React, {useState} from "react";
+import {useAuth} from "@/lib/auth/AuthContext";
+import {deleteQuote} from "@/actions/qoute.action";
+import {useRouter} from "next/navigation";
 
 export default function DeleteQuoteButton({
   quoteId,

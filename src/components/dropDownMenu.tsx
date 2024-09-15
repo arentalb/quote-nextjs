@@ -11,7 +11,7 @@ import {
 import Link from "next/link";
 import {Button} from "@/components/ui/button";
 import {signOut} from "@/actions/auth.action";
-import {useAuth} from "@/contexts/AuthContext";
+import {useAuth} from "@/lib/auth/AuthContext";
 
 export default function DropDownMenu({ links }: { links: string[] }) {
   const { user, clearUser } = useAuth();
