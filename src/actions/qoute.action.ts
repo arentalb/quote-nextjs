@@ -1,7 +1,7 @@
 "use server";
 import db from "@/lib/db";
 import { QuoteDetail } from "@/actions/qoute.action.type";
-import { Category, Qoute } from "@prisma/client";
+import { Qoute } from "@prisma/client";
 import { getAuth } from "@/lib/auth/getAuth";
 import { CreateQuoteParams } from "@/types";
 import { QuoteCreateValidation } from "@/lib/schemas";
@@ -95,10 +95,6 @@ export async function getAllQuotesByMe(): Promise<Qoute[] | null> {
   });
 }
 
-export async function getAllCategories(): Promise<Category[]> {
-  return db.category.findMany();
-}
-
 export async function getRecentQuotesByMe(): Promise<Qoute[] | null> {
   const { user } = await getAuth();
   if (!user) {
@@ -186,12 +182,17 @@ export async function deleteQuote(id: string) {
   if (!user) {
     return null;
   }
-  revalidatePath("/");
-  redirect("/");
-  return db.qoute.delete({
-    where: {
-      id: id,
-    },
-  });
+
+  try {
+    await db.qoute.delete({
+      where: {
+        id: id,
+      },
+    });
+    revalidatePath("/");
+    redirect("/");
+  } catch (e) {
+    console.log(e);
+  }
 }
 //https://www.prisma.io/docs/orm/prisma-client/type-safety/operating-against-partial-structures-of-model-types#solution

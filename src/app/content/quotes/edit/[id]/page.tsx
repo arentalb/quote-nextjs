@@ -1,8 +1,9 @@
 import { getAuth } from "@/lib/auth/getAuth";
 import { notFound } from "next/navigation";
 import React from "react";
-import { getAllCategories, getQuoteById } from "@/actions/qoute.action";
+import { getQuoteById } from "@/actions/qoute.action";
 import QuoteEditForm from "@/components/forms/quoteEditForm";
+import { getAllCategories } from "@/actions/category.action";
 
 export const revalidate = 0;
 

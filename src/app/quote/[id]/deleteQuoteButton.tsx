@@ -6,13 +6,13 @@ import { useAuth } from "@/lib/auth/AuthContext";
 import { deleteQuote } from "@/actions/qoute.action";
 import { useToast } from "@/hooks/use-toast";
 import LoadingSpinner from "@/components/loadingSpinner";
+import { useRouter } from "next/navigation";
 
 export default function DeleteQuoteButton({ quoteId }: { quoteId: string }) {
   const { user } = useAuth();
   const { toast } = useToast();
-
   const [loading, setLoading] = useState(false);
-
+  const router = useRouter();
   async function handleDelete(event: React.MouseEvent<HTMLButtonElement>) {
     event.preventDefault();
     setLoading(true);
@@ -30,6 +30,7 @@ export default function DeleteQuoteButton({ quoteId }: { quoteId: string }) {
       });
     } finally {
       setLoading(false);
+      router.push("/");
     }
   }
 

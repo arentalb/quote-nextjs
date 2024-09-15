@@ -1,6 +1,6 @@
 import React from "react";
 import QuoteCreateForm from "@/components/forms/quoteCreateForm";
-import { getAllCategories } from "@/actions/qoute.action";
+import { getAllCategories } from "@/actions/category.action";
 
 export default async function Page() {
   const categories = await getAllCategories();

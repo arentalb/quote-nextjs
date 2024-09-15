@@ -8,11 +8,12 @@ import GenericCard from "@/components/genericCard";
 import GenericCardWrapper from "@/components/genericCardWrapper";
 import MagicLink from "@/components/magicLink";
 import { getRecentCommentsByMe } from "@/actions/comment.action";
+import { getAuth } from "@/lib/auth/getAuth";
 
 export default async function Page() {
   const quotes = await getRecentQuotesByMe();
   const comments = await getRecentCommentsByMe();
-
+  const { user } = await getAuth();
   if (!quotes) {
     return null;
   }
@@ -24,9 +25,16 @@ export default async function Page() {
     <div className={"flex flex-col justify-center mt-6 w-full"}>
       <div className={"flex justify-between items-center w-full mb-8"}>
         <h1 className={"text-3xl font-bold"}>Recent quotes </h1>
-        <Button asChild>
-          <Link href={"/content/quotes/create"}>Create</Link>
-        </Button>
+        <div className={"flex gap-4"}>
+          <Button asChild>
+            <Link href={"/content/quotes/create"}>New Quote</Link>
+          </Button>
+          {user?.role === "admin" && (
+            <Button asChild>
+              <Link href={"/content/category"}>New Category</Link>
+            </Button>
+          )}
+        </div>
       </div>
       {quotes.length > 0 ? (
         <GenericCardWrapper>

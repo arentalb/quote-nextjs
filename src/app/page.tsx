@@ -4,7 +4,8 @@ import QuoteList from "@/components/quotList";
 import CategorySkeleton from "@/components/skeletons/categorySkeleton";
 import QuoteSkeleton from "@/components/skeletons/quoteSkeleton";
 import CategoryList from "@/components/categoryList";
-import { getAllCategories, getAllQuote } from "@/actions/qoute.action";
+import { getAllQuote } from "@/actions/qoute.action";
+import { getAllCategories } from "@/actions/category.action";
 
 export default async function Page({
   searchParams,
