@@ -16,24 +16,6 @@ export type QuoteDetail = Prisma.QouteGetPayload<{
   };
 }>;
 
-export type QuoteComments = Prisma.QouteGetPayload<{
-  include: {
-    comments: {
-      select: {
-        message: true;
-        id: true;
-        created_at: true;
-        User: {
-          select: {
-            username: true;
-            id: true;
-          };
-        };
-      };
-    };
-  };
-}>;
-
 export type CommentWithQuoteId = Prisma.CommentGetPayload<{
   select: {
     qouteId: true;

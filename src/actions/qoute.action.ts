@@ -3,7 +3,6 @@ import db from "@/lib/db";
 import {
   AllComments,
   CommentWithQuoteId,
-  QuoteComments,
   QuoteDetail,
 } from "@/actions/qoute.action.type";
 import { Category, Comment, Qoute } from "@prisma/client";
@@ -11,6 +10,7 @@ import { getAuth } from "@/lib/auth/getAuth";
 import { CreateQuoteParams } from "@/types";
 import { QuoteCreateValidation } from "@/lib/schemas";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 export async function getAllQuote(
   search = "",
@@ -58,6 +58,32 @@ export async function getAllQuote(
     },
   });
 }
+
+export async function getQuoteById(id: string): Promise<QuoteDetail | null> {
+  const { user } = await getAuth();
+  if (!user) {
+    return null;
+  }
+  return db.qoute.findUnique({
+    where: {
+      id: id,
+    },
+    include: {
+      categories: {
+        select: {
+          name: true,
+          id: true,
+        },
+      },
+      User: {
+        select: {
+          username: true,
+        },
+      },
+    },
+  });
+}
+
 export async function getAllQuotesByMe(): Promise<Qoute[] | null> {
   const { user } = await getAuth();
   if (!user) {
@@ -97,56 +123,12 @@ export async function getAllCommentsByMe(): Promise<
     },
   });
 }
-export async function getQuoteById(id: string): Promise<QuoteDetail | null> {
-  return db.qoute.findUnique({
-    where: {
-      id: id,
-    },
-    include: {
-      categories: {
-        select: {
-          name: true,
-          id: true,
-        },
-      },
-      User: {
-        select: {
-          username: true,
-        },
-      },
-    },
-  });
-}
 
-export async function getQuoteComments(
-  id: string,
-): Promise<QuoteComments | null> {
-  return db.qoute.findUnique({
-    where: {
-      id: id,
-    },
-    include: {
-      comments: {
-        orderBy: {
-          created_at: "desc",
-        },
-        select: {
-          id: true,
-          message: true,
-          created_at: true,
-          User: {
-            select: {
-              username: true,
-              id: true,
-            },
-          },
-        },
-      },
-    },
-  });
-}
-
-export async function getAllComments(): Promise<AllComments[]> {
+export async function getAllComments(): Promise<AllComments[] | null> {
+  const { user } = await getAuth();
+  if (!user) {
+    return null;
+  }
   return db.comment.findMany({
     select: {
       id: true,
@@ -158,95 +140,6 @@ export async function getAllComments(): Promise<AllComments[]> {
           id: true,
         },
       },
-    },
-  });
-}
-
-export async function CreateNewComment(
-  message: string,
-  qouteID: string,
-): Promise<Comment | null> {
-  const { user } = await getAuth();
-  if (!user) {
-    return null;
-  }
-  return db.comment.create({
-    data: {
-      message: message,
-      qouteId: qouteID,
-      userId: user?.id,
-    },
-  });
-}
-export async function UpdateComment(
-  commentId: string,
-  newComment: string,
-): Promise<Comment | null> {
-  const { user } = await getAuth();
-
-  if (!user) {
-    return null;
-  }
-
-  if (newComment.trim().length === 0) {
-    throw new Error("Comment message could not be null ");
-  }
-
-  const comment = await db.comment.findUnique({
-    where: {
-      id: commentId,
-    },
-    select: {
-      userId: true,
-    },
-  });
-
-  if (!comment) {
-    return null;
-  }
-
-  if (comment.userId !== user.id) {
-    return null;
-  }
-
-  return db.comment.update({
-    where: {
-      id: commentId,
-    },
-    data: {
-      message: newComment,
-    },
-  });
-}
-
-export async function DeleteComment(
-  commentId: string,
-): Promise<null | undefined> {
-  const { user } = await getAuth();
-  if (!user) {
-    return null;
-  }
-
-  const comment = await db.comment.findUnique({
-    where: {
-      id: commentId,
-    },
-    select: {
-      userId: true,
-    },
-  });
-
-  if (!comment) {
-    return null;
-  }
-
-  if (comment.userId !== user.id && user.role !== "admin") {
-    return null;
-  }
-
-  await db.comment.delete({
-    where: {
-      id: commentId,
     },
   });
 }
@@ -353,6 +246,7 @@ export async function updateQuote(
 
 export async function deleteQuote(id: string) {
   revalidatePath("/");
+  redirect("/");
   return db.qoute.delete({
     where: {
       id: id,

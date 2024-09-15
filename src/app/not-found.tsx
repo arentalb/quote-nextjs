@@ -8,7 +8,7 @@ export default function NotFound() {
       <div className="mb-8 text-center">
         <h1 className="text-5xl  capitalize mb-3">Not Found </h1>
         <p className={"mb-8 text-sm"}>
-          Sorry that we could not find what you were looking for.
+          Sorry we could not find what you were looking for.
         </p>
         <Button asChild>
           <Link href="/">Go to Home</Link>

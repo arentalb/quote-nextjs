@@ -1,22 +1,22 @@
 import React from "react";
-import {Card, CardContent, CardHeader} from "@/components/ui/card";
-import {Quote, Tag} from "lucide-react";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Quote, Tag } from "lucide-react";
 
-import {formatDate} from "@/lib/utils";
-import {getQuoteById} from "@/actions/qoute.action";
+import { formatDate } from "@/lib/utils";
+import { getQuoteById } from "@/actions/qoute.action";
 import CommentSection from "@/components/commentSection";
-import {redirect} from "next/navigation";
-import {getAuth} from "@/lib/auth/getAuth";
-import DeleteQuoteButton from "@/app/quote/[slug]/deleteQuoteButton";
+import { notFound, redirect } from "next/navigation";
+import { getAuth } from "@/lib/auth/getAuth";
+import DeleteQuoteButton from "@/app/quote/[id]/deleteQuoteButton";
 
-export default async function Page({ params }: { params: { slug: string } }) {
+export default async function Page({ params }: { params: { id: string } }) {
   const { user } = await getAuth();
   if (!user) {
-    redirect("/signup");
+    redirect("/signin");
   }
-  const quote = await getQuoteById(params.slug);
+  const quote = await getQuoteById(params.id);
   if (!quote) {
-    return <p>qoute not founded </p>;
+    return notFound();
   }
 
   return (
@@ -25,8 +25,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
         <CardHeader className="border-b border-gray-200 pb-4 mb-10 px-0 md:px-6  ">
           <div className={"flex justify-between items-center"}>
             <h1 className="text-3xl font-extrabold">{quote.title}</h1>
-
-            <DeleteQuoteButton quoteId={quote.id} userId={quote.userId} />
+            <DeleteQuoteButton quoteId={quote.id} />
           </div>
         </CardHeader>
         <CardContent className="space-y-6 px-0 md:px-6">
@@ -59,8 +58,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
           </div>
         </CardContent>
       </Card>
-
-      <CommentSection slug={params.slug} />
+      <CommentSection quoteId={params.id} />
     </div>
   );
 }
