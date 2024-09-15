@@ -25,7 +25,7 @@ export default async function Page({ params }: { params: { id: string } }) {
         <CardHeader className="border-b border-gray-200 pb-4 mb-10 px-0 md:px-6  ">
           <div className={"flex justify-between items-center"}>
             <h1 className="text-3xl font-extrabold">{quote.title}</h1>
-            <DeleteQuoteButton quoteId={quote.id} />
+            <DeleteQuoteButton quoteId={quote.id} ownerId={quote.userId} />
           </div>
         </CardHeader>
         <CardContent className="space-y-6 px-0 md:px-6">

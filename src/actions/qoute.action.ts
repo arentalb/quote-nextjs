@@ -179,20 +179,35 @@ export async function updateQuote(
 
 export async function deleteQuote(id: string) {
   const { user } = await getAuth();
+
   if (!user) {
     return null;
   }
-
   try {
+    const quote = await db.qoute.findUnique({
+      where: {
+        id: id,
+      },
+      select: {
+        userId: true,
+      },
+    });
+
+    if (!quote || (quote.userId !== user.id && user.role !== "admin")) {
+      return null;
+    }
+
     await db.qoute.delete({
       where: {
         id: id,
       },
     });
+
     revalidatePath("/");
     redirect("/");
   } catch (e) {
     console.log(e);
   }
 }
+
 //https://www.prisma.io/docs/orm/prisma-client/type-safety/operating-against-partial-structures-of-model-types#solution

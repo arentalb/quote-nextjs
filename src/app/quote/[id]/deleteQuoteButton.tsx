@@ -8,7 +8,13 @@ import { useToast } from "@/hooks/use-toast";
 import LoadingSpinner from "@/components/shared/loadingSpinner";
 import { useRouter } from "next/navigation";
 
-export default function DeleteQuoteButton({ quoteId }: { quoteId: string }) {
+export default function DeleteQuoteButton({
+  quoteId,
+  ownerId,
+}: {
+  quoteId: string;
+  ownerId: string;
+}) {
   const { user } = useAuth();
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
@@ -34,7 +40,10 @@ export default function DeleteQuoteButton({ quoteId }: { quoteId: string }) {
     }
   }
 
-  if (!user || user.role !== "admin") {
+  //if user dose not exist return null
+  //if userexists and it is not admin return nyull
+  //if userexists and it is not the owner
+  if (!user || (user.role !== "admin" && user.id !== ownerId)) {
     return null;
   }
 
@@ -43,7 +52,7 @@ export default function DeleteQuoteButton({ quoteId }: { quoteId: string }) {
       type="button"
       onClick={handleDelete}
       aria-label="Delete Quote"
-      className={`flex items-center text-red-500/60`}
+      className="flex items-center text-red-500/60"
       disabled={loading}
     >
       {loading ? <LoadingSpinner /> : <Trash width={20} height={20} />}
